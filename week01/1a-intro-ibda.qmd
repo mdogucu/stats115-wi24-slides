@@ -9,7 +9,7 @@ format:
     slide-number: true
     incremental: true
     theme: ["../templates/slide-style.scss"]
-    logo: "https://www.introdata.science/img/logo.png"
+    logo: "https://www.stats115.com/img/logo.png"
     title-slide-attributes: 
       data-background-image: "https://stats115.com/img/logo.png"
       data-background-size: 5%
