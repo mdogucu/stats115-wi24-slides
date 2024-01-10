@@ -24,7 +24,9 @@ library(bayesrules)
 theme_set(theme_gray(base_size = 18))
 ```
 
+# Bayes' Rule for Random Variables
 
+The notes for this lecture are derived from  [Section 2.3 of the Bayes Rules! book](https://www.bayesrulesbook.com/chapter-2#cousin-cole)
 
 ## Notation
 

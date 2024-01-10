@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="2a-bayes-rv_files/libs/clipboard/clipboard.min.js"></script>
-<script src="2a-bayes-rv_files/libs/quarto-html/tabby.min.js"></script>
-<script src="2a-bayes-rv_files/libs/quarto-html/popper.min.js"></script>
-<script src="2a-bayes-rv_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="2a-bayes-rv_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="2a-bayes-rv_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="2a-bayes-rv_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="2a-bayes-rv_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="3a-beta-binomial_files/libs/clipboard/clipboard.min.js"></script>
+<script src="3a-beta-binomial_files/libs/quarto-html/tabby.min.js"></script>
+<script src="3a-beta-binomial_files/libs/quarto-html/popper.min.js"></script>
+<script src="3a-beta-binomial_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="3a-beta-binomial_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="3a-beta-binomial_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="3a-beta-binomial_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="3a-beta-binomial_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.450">
 
   <meta name="author" content="Dr.&nbsp;Mine Dogucu">
-  <title>Bayesian Models for Random Variables</title>
+  <title>The Beta-Binomial Model</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="2a-bayes-rv_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="2a-bayes-rv_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="3a-beta-binomial_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="3a-beta-binomial_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -95,11 +95,11 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="2a-bayes-rv_files/libs/revealjs/dist/theme/quarto.css">
-  <link href="2a-bayes-rv_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="2a-bayes-rv_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="2a-bayes-rv_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="2a-bayes-rv_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="3a-beta-binomial_files/libs/revealjs/dist/theme/quarto.css">
+  <link href="3a-beta-binomial_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="3a-beta-binomial_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="3a-beta-binomial_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="3a-beta-binomial_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -390,7 +390,7 @@
     <div class="slides">
 
 <section id="title-slide" data-background-image="https://stats115.com/img/logo.png" data-background-position="50% 85%" data-background-size="5%" class="quarto-title-block center">
-  <h1 class="title">Bayesian Models for Random Variables</h1>
+  <h1 class="title">The Beta-Binomial Model</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -402,677 +402,262 @@ Dr.&nbsp;Mine Dogucu
 
 </section>
 <section>
-<section id="bayes-rule-for-random-variables" class="title-slide slide level1 center">
-<h1>Bayes’ Rule for Random Variables</h1>
-<p>The notes for this lecture are derived from <a href="https://www.bayesrulesbook.com/chapter-2#cousin-cole">Section 2.3 of the Bayes Rules! book</a></p>
+<section id="beta-prior" class="title-slide slide level1 center">
+<h1>Beta prior</h1>
+<p>The notes for this lecture are derived from <a href="https://www.bayesrulesbook.com/chapter-3#ch3-prior">Section 3.1 of the Bayes Rules! book</a></p>
 </section>
-<section id="notation" class="slide level2">
-<h2>Notation</h2>
-<ul>
-<li class="fragment"><p>We will use <em>Greek letters</em> (eg: <span class="math inline">\(\pi, \beta, \mu\)</span>) to denote our primary variables of interest.</p></li>
-<li class="fragment"><p>We will use <em>capital letters</em> toward the end of the alphabet (eg: <span class="math inline">\(X, Y, Z\)</span>) to denote random variables related to our data.</p></li>
-<li class="fragment"><p>We denote an observed <em>outcome</em> of <span class="math inline">\(Y\)</span> (a constant) using lower case <span class="math inline">\(y\)</span>.</p></li>
-</ul>
-</section></section>
-<section>
-<section id="review-discrete-probability-models" class="title-slide slide level1 center">
-<h1>Review: Discrete probability models</h1>
-<p>Let <span class="math inline">\(Y\)</span> be a discrete random variable with probability mass function (pmf) <span class="math inline">\(f(y)\)</span>. Then the pmf defines the probability of any given <span class="math inline">\(y\)</span>, <span class="math inline">\(f(y) = P(Y = y)\)</span>, and has the following properties:</p>
-<p><span class="math inline">\(\sum_{\text{all } y} f(y) = 1\)</span></p>
-<p><span class="math inline">\(0 \le f(y) \le 1\)</span> for all values of <span class="math inline">\(y\)</span> in the range of <span class="math inline">\(Y\)</span></p>
-</section>
-<section id="phd-admissions" class="slide level2">
-<h2>PhD admissions</h2>
-<p>Let Y represent a random variable that represents the number of applicants admitted to a PhD program which has received applications from 5 prospective students. That is <span class="math inline">\(\Omega_Y = \{0, 1, 2, 3, 4, 5\}\)</span>. We are interested in the parameter <span class="math inline">\(\pi\)</span> which represents the probability of acceptance to this program. For demonstrative purposes, we will only consider three possible values of <span class="math inline">\(\pi\)</span> as 0.2, 0.4, and 0.8.</p>
-</section>
-<section id="prior-model-for-pi" class="slide level2">
-<h2>Prior model for <span class="math inline">\(\pi\)</span></h2>
-<p>You are now a true Bayesian and decide to consult with an expert who knows the specific PhD program well and the following is the prior distribution the expert suggests you use in your analysis.</p>
-
-<table align="center">
-<tbody><tr>
-<th>
-π
-</th>
-<th>
-0.2
-</th>
-<th>
-0.4
-</th>
-<th>
-0.8
-</th>
-</tr>
-<tr>
-<td>
-f(π)
-</td>
-<td>
-0.7
-</td>
-<td>
-0.2
-</td>
-<td>
-0.1
-</td>
-</tr>
-
-</tbody></table>
-<p>The expert thinks that this is quite a hard-to-get-into program.</p>
-</section>
-<section id="from-prior-to-posterior" class="slide level2">
-<h2>From prior to posterior</h2>
-<p>We have a prior model for <span class="math inline">\(\pi\)</span> that is <span class="math inline">\(f(\pi)\)</span>.</p>
-<p>In light of observed data <span class="math inline">\(y\)</span> we can update our ideas about <span class="math inline">\(\pi\)</span>.</p>
-<p>We will call this the posterior model <span class="math inline">\(f(\pi|y)\)</span>.</p>
-<p>In order to do this update we will need data which we have not observed yet.</p>
-</section>
-<section id="consider-data" class="slide level2">
-<h2>Consider data</h2>
-<p>For the two scenarios below fill out the table (twice). For now, it is OK to use your intuition to guesstimate.</p>
-
-<table align="center">
-<tbody><tr>
-<th>
-</th>
-<th>
-π
-</th>
-<th>
-0.2
-</th>
-<th>
-0.4
-</th>
-<th>
-0.8
-</th>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-f(π)
-</td>
-<td>
-0.7
-</td>
-<td>
-0.2
-</td>
-<td>
-0.1
-</td>
-</tr>
-<tr>
-<td>
-Scenario 1
-</td>
-<td>
-f(π|y)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Scenario 2
-</td>
-<td>
-f(π|y)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-
-</tbody></table>
-<p>Scenario 1: What if this program accepted five of the five applicants?</p>
-<p>Scenario 2: What if this program accepted none of the five applicants?</p>
-</section>
-<section id="intuition-vs.-reality" class="slide level2">
-<h2>Intuition vs.&nbsp;Reality</h2>
-<p>Your intuition may not be Bayesian if - you have only relied on the prior model to decide on the posterior model. - you have only relied on the data to decide on the posterior model.</p>
-<p>Bayesian statistics is a balancing act and we will take both the prior and the data to get to the posterior. Don’t worry if your intuition was wrong. As we practice more, you will learn to think like a Bayesian.</p>
-</section>
-<section id="likelihood" class="slide level2">
-<h2>Likelihood</h2>
-<p>We do not know <span class="math inline">\(\pi\)</span> but for now let’s consider one of the three possibilities for <span class="math inline">\(\pi = 0.2\)</span>. If <span class="math inline">\(\pi\)</span> were 0.2 what is the probability that we would observe 4 of the 5 applicants get admitted to the program? Would you expect this probability to be high or low?</p>
-<div class="fragment">
-<p>Can you calculate an exact value?</p>
-</div>
-</section>
-<section id="the-binomial-model" class="slide level2">
-<h2>The Binomial Model</h2>
-<p>Let random variable <span class="math inline">\(Y\)</span> be the <em>number of successes</em> (eg: number of accepted applicants) in <span class="math inline">\(n\)</span> <em>trials</em> (eg: applications). Assume that the number of trials is <em>fixed</em>, the trials are <em>independent</em>, and the <em>probability of success</em> (eg: probability of acceptance) in each trial is <span class="math inline">\(\pi\)</span>. Then the <em>dependence</em> of <span class="math inline">\(Y\)</span> on <span class="math inline">\(\pi\)</span> can be modeled by the Binomial model with <strong>parameters</strong> <span class="math inline">\(n\)</span> and <span class="math inline">\(\pi\)</span>. In mathematical notation:</p>
-<p><span class="math display">\[Y | \pi \sim \text{Bin}(n,\pi) \]</span></p>
+<section id="back-to-graduate-school-applications" class="slide level2">
+<h2>Back to Graduate School Applications</h2>
+<p>Last lecture we were trying to understand <span class="math inline">\(\pi\)</span> the acceptance rate of a graduate program in a specific department. Let’s make a fresh start to the same problem. This time we will let <span class="math inline">\(\pi \in [0,1]\)</span>.</p>
 </section>
 <section id="section" class="slide level2">
 <h2></h2>
-<p>then, the Binomial model is specified by a conditional pmf:</p>
-<p><span class="math display">\[f(y|\pi) = {n \choose y} \pi^y (1-\pi)^{n-y} \;\; \text{ for } y \in \{0,1,2,\ldots,n\}\]</span></p>
+<p><strong>Continuous probability models</strong></p>
+<p>Let <span class="math inline">\(\pi\)</span> be a continuous random variable with pdf <span class="math inline">\(f(\pi)\)</span>. Then <span class="math inline">\(f(\pi)\)</span> has the following properties:</p>
+<ul>
+<li class="fragment"><span class="math inline">\(\int_\pi f(\pi)d\pi = 1\)</span>, ie. the area under <span class="math inline">\(f(\pi)\)</span> is 1</li>
+<li class="fragment"><span class="math inline">\(f(\pi) \ge 0\)</span></li>
+<li class="fragment"><span class="math inline">\(P(a &lt; \pi &lt; b) = \int_a^b f(\pi) d\pi\)</span> when <span class="math inline">\(a \le b\)</span></li>
+</ul>
+<p>Interpreting <span class="math inline">\(f(\pi)\)</span>:</p>
+<p><span class="math inline">\(f(\pi)\)</span> can be used to <em>compare</em> the plausibility of two different values of <span class="math inline">\(\pi\)</span>.</p>
 </section>
-<section id="the-binomial-model-1" class="slide level2">
-<h2>The Binomial Model</h2>
-<p><span class="math inline">\(f(y = 4 | \pi = 0.2) = {5 \choose 4} 0.2^40.8^1 = \frac{5!}{(5-4)! 4!} 0.2^40.8^1= 0.0064\)</span></p>
-<p>or using R</p>
+<section id="plotting-the-continuous-prior" class="slide level2">
+<h2>Plotting the continuous prior</h2>
+<p>For each of the student’s prior ideas for <span class="math inline">\(\pi\)</span> plot the pdf of the prior. Your plot will not be exact since no exact values are given.</p>
+<p>Morteza thinks that it is extremely difficult to get into this program.</p>
+<p>Jared thinks that it is difficult to get into this program.</p>
+<p>Erin does not have any strong opinions whether it is difficult or easy to get into this program.</p>
+<p>Xuan thinks that it is easy to get into this program.</p>
+<p>Beyoncé thinks that it is extremely easy to get into this program.</p>
+</section>
+<section id="mortezas-prior" class="slide level2">
+<h2>Morteza’s prior</h2>
+
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="jareds-prior" class="slide level2">
+<h2>Jared’s prior</h2>
+
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="erins-prior" class="slide level2">
+<h2>Erin’s prior</h2>
+
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="xuans-prior" class="slide level2">
+<h2>Xuan’s prior</h2>
+
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="beyoncés-prior" class="slide level2">
+<h2>Beyoncé’s prior</h2>
+
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="beta-prior-model" class="slide level2">
+<h2>Beta Prior model</h2>
+<p>Let <span class="math inline">\(\pi\)</span> be a random variable which can take any value between 0 and 1, ie. <span class="math inline">\(\pi \in [0,1]\)</span>. Then the variability in <span class="math inline">\(\pi\)</span> might be well modeled by a Beta model with <strong>shape parameters</strong> <span class="math inline">\(\alpha &gt; 0\)</span> and <span class="math inline">\(\beta &gt; 0\)</span>:</p>
+<p><span class="math display">\[\pi \sim \text{Beta}(\alpha, \beta)\]</span> The Beta model is specified by continuous pdf <span class="math display">\[\begin{equation}
+f(\pi) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \pi^{\alpha-1} (1-\pi)^{\beta-1} \;\; \text{ for } \pi \in [0,1]
+\end{equation}\]</span> where <span class="math inline">\(\Gamma(z) = \int_0^\infty y^{z-1}e^{-y}dy\)</span> and <span class="math inline">\(\Gamma(z + 1) = z \Gamma(z)\)</span>. Fun fact: when <span class="math inline">\(z\)</span> is a positive integer, then <span class="math inline">\(\Gamma(z)\)</span> simplifies to <span class="math inline">\(\Gamma(z) = (z-1)!\)</span>.</p>
+</section>
+<section id="beta-prior-model-1" class="slide level2">
+<h2>Beta Prior model</h2>
+<div class="pull-left">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">dbinom</span>(<span class="dv">4</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">prob =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0064</code></pre>
+<div class="cell-output-display">
+<p><img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
 </div>
+</div>
+</div>
+<div class="pull-right">
+<p><span class="math inline">\(\pi \sim \text{Beta}(3, 8)\)</span></p>
+<p><span class="math inline">\(f(\pi) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \pi^{\alpha-1} (1-\pi)^{\beta-1}\)</span></p>
+<p><span class="math inline">\(f(\pi) = \frac{\Gamma(3 + 11)}{\Gamma(3)\Gamma(8)} 0.5^{3-1} (1-0.5)^{8-1}\)</span></p>
+<p><span class="math inline">\(f(\pi) = \frac{13!}{2!7!} 0.5^{3-1} (1-0.5)^{8-1}\)</span></p>
+<p><span class="math inline">\(f(\pi) = 0.703125\)</span></p>
 </div>
 </section>
-<section id="the-binomial-model-2" class="slide level2">
-<h2>The Binomial Model</h2>
-<p>If <span class="math inline">\(\pi\)</span> were 0.2 what is the probability that we would observe 3 of the 5 applicants get admitted to the program? Would you expect this probability to be high or low?</p>
-<p><span class="math inline">\(f(x = 3 | \pi = 0.2) = {5 \choose 3} 0.2^30.8^2 = \frac{5!}{(5-3)! 3!} 0.2^30.8^2 =0.0512\)</span></p>
-<p>or using R</p>
+<section id="beta-prior-model-2" class="slide level2">
+<h2>Beta Prior model</h2>
+<p><span class="math inline">\(\pi \sim \text{Beta}(3, 8)\)</span></p>
+<div class="pull-left">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">dbinom</span>(<span class="dv">3</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">prob =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0512</code></pre>
+<div class="cell-output-display">
+<p><img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
 </div>
 </div>
-</section>
-<section id="the-binomial-model-3" class="slide level2">
-<h2>The Binomial Model</h2>
-<p>Rather than doing this one-by-one we can let R consider all different possible observations of y, 0 through 5.</p>
+</div>
+<div class="pull-right">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">dbinom</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">prob =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">dbeta</span>(<span class="at">x =</span> <span class="fl">0.5</span>, </span>
+<span id="cb1-2"><a href="#cb1-2"></a>      <span class="at">shape1 =</span> <span class="dv">3</span>, </span>
+<span id="cb1-3"><a href="#cb1-3"></a>      <span class="at">shape2 =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.32768 0.40960 0.20480 0.05120 0.00640 0.00032</code></pre>
+<pre><code>[1] 0.703125</code></pre>
+</div>
 </div>
 </div>
 </section>
-<section id="probabilities-for-y_is-if-pi-0.2" class="slide level2">
-<h2>Probabilities for <span class="math inline">\(y_is\)</span> if <span class="math inline">\(\pi = 0.2\)</span></h2>
+<section id="plotting-beta-prior" class="slide level2">
+<h2>Plotting Beta Prior</h2>
 
-<img data-src="2a-bayes-rv_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="other-possibilities-for-pi" class="slide level2">
-<h2>Other possibilities for <span class="math inline">\(\pi\)</span></h2>
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="plotting-beta-prior-with-bayesrules-package" class="slide level2">
+<h2>Plotting Beta Prior with <code>bayesrules</code> package</h2>
+<p>Use the <code>plot_beta()</code> function in the <code>bayesrules</code> package to try different shape parameters. Example:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">plot_beta</span>(<span class="at">alpha =</span> <span class="dv">5</span>, <span class="at">beta =</span> <span class="dv">7</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
-<img data-src="2a-bayes-rv_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="data" class="slide level2">
-<h2>Data</h2>
-<p>The admissions committee has announced that they have accepted 3 of the 5 applicants.</p>
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="beta-descriptives" class="slide level2">
+<h2>Beta Descriptives</h2>
+<p><span class="math display">\[E(\pi) = \frac{\alpha}{\alpha + \beta}\]</span></p>
+<p><span class="math display">\[\text{Mode}(\pi) = \frac{\alpha - 1}{\alpha + \beta - 2}\]</span></p>
+<p><span class="math display">\[\text{Var}(\pi) = \frac{\alpha \beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}\]</span></p>
 </section>
-<section id="data-1" class="slide level2">
-<h2>Data</h2>
-
-<img data-src="2a-bayes-rv_files/figure-revealjs/unnamed-chunk-7-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="likelihood-1" class="slide level2">
-<h2>Likelihood</h2>
-
-<img data-src="2a-bayes-rv_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="likelihood-2" class="slide level2">
-<h2>Likelihood</h2>
+<section id="beta-descriptives-with-bayesrules-package" class="slide level2">
+<h2>Beta Descriptives with <code>bayesrules</code> package</h2>
+<p>Use the <code>summarize_beta()</code> function in the <code>bayesrules</code> package to find the mean, mode, and variance of various Beta distributions. Example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">dbinom</span>(<span class="dv">3</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">prob =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">summarize_beta</span>(<span class="at">alpha =</span> <span class="dv">5</span>, <span class="at">beta =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0512</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">dbinom</span>(<span class="dv">3</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">prob =</span> <span class="fl">0.4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2304</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">dbinom</span>(<span class="dv">3</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">prob =</span> <span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2048</code></pre>
-</div>
-</div>
-</section>
-<section id="likelihood-3" class="slide level2">
-<h2>Likelihood</h2>
-
-<table align="center">
-<tbody><tr>
-<th>
-π
-</th>
-<th>
-0.2
-</th>
-<th>
-0.4
-</th>
-<th>
-0.8
-</th>
-</tr>
-<tr>
-<td>
-L(π | y = 3)
-</td>
-<td>
-0.0512
-</td>
-<td>
-0.2304
-</td>
-<td>
-0.2048
-</td>
-</tr>
-
-</tbody></table>
-</section>
-<section id="likelihood-4" class="slide level2">
-<h2>Likelihood</h2>
-<p>The likelihood function <span class="math inline">\(L(\pi|y=3)\)</span> is the same as the conditional probability mass function <span class="math inline">\(f(y|\pi)\)</span> at the observed value <span class="math inline">\(y = 3\)</span>.</p>
-</section>
-<section id="pmf-vs-likelihood" class="slide level2">
-<h2><strong>pmf vs likelihood</strong></h2>
-<p>When <span class="math inline">\(\pi\)</span> is known, the <strong>conditional pmf</strong> <span class="math inline">\(f(\cdot | \pi)\)</span> allows us to compare the probabilities of different possible values of data <span class="math inline">\(Y\)</span> (eg: <span class="math inline">\(y_1\)</span> or <span class="math inline">\(y_2\)</span>) occurring with <span class="math inline">\(\pi\)</span>:</p>
-<p><span class="math display">\[f(y_1|\pi) \; \text{ vs } \; f(y_2|\pi) \; .\]</span></p>
-<p>When <span class="math inline">\(Y=y\)</span> is known, the <strong>likelihood function</strong> <span class="math inline">\(L(\cdot | y) = f(y | \cdot)\)</span> allows us to compare the relative likelihoods of different possible values of <span class="math inline">\(\pi\)</span> (eg: <span class="math inline">\(\pi_1\)</span> or <span class="math inline">\(\pi_2\)</span>) given that we observed data <span class="math inline">\(y\)</span>:</p>
-<p><span class="math display">\[L(\pi_1|y) \; \text{ vs } \; L(\pi_2|y) \; .\]</span></p>
-</section>
-<section id="getting-closer-to-conclusion" class="slide level2">
-<h2>Getting closer to conclusion</h2>
-<p>The expert assigned the highest weight to <span class="math inline">\(\pi = 0.2\)</span>. However the data <span class="math inline">\(y = 3\)</span> suggests that <span class="math inline">\(\pi = 0.4\)</span> is more likely.</p>
-<p>We will continue to consider all the possible values of <span class="math inline">\(\pi\)</span>.</p>
-<p>Now is a good time to balance the prior and the likelihood.</p>
-</section>
-<section id="from-events-to-random-variables" class="slide level2">
-<h2>From events to random variables</h2>
-<p><span class="math inline">\(\text{posterior} = \frac{\text{prior} \times \text{likelihood}}{\text{marginal probability of data}}\)</span></p>
-<div class="fragment">
-<p><span class="math inline">\(\text{posterior} = \frac{\text{prior} \times \text{likelihood}}{f(y = 3)}\)</span></p>
-</div>
-<div class="fragment">
-<p><span class="math inline">\(\text{posterior} = \frac{\text{prior} \times \text{likelihood}}{f(y = 3 \cap \pi = 0.2) + f(y = 3 \cap \pi = 0.4) + f(y = 3 \cap \pi = 0.8)}\)</span></p>
-</div>
-<div class="fragment">
-<p><span class="math inline">\(\text{posterior} = \frac{\text{prior} \times \text{likelihood}}{f(y = 3 | \pi = 0.2) \cdot (\pi = 0.2) + f(y = 3 | \pi = 0.4) \cdot (\pi = 0.4) + f(y = 3 | \pi = 0.8) \cdot (\pi = 0.8)}\)</span></p>
-</div>
-</section>
-<section id="normalizing-constant" class="slide level2">
-<h2>Normalizing constant</h2>
-<p><span class="math inline">\(\text{posterior} = \frac{\text{prior} \times \text{likelihood}}{f(y = 3 | \pi = 0.2) \cdot (\pi = 0.2) + f(y = 3 | \pi = 0.4) \cdot (\pi = 0.4) + f(y = 3 | \pi = 0.8) \cdot (\pi = 0.8)}\)</span></p>
-<p>Thus <span class="math inline">\(f(y = 3) =\)</span></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">dbinom</span>(<span class="dv">3</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">prob =</span> <span class="fl">0.2</span>) <span class="sc">*</span> <span class="fl">0.7</span> <span class="sc">+</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="fu">dbinom</span>(<span class="dv">3</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">prob =</span> <span class="fl">0.4</span>) <span class="sc">*</span> <span class="fl">0.2</span> <span class="sc">+</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="fu">dbinom</span>(<span class="dv">3</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">prob =</span> <span class="fl">0.8</span>) <span class="sc">*</span> <span class="fl">0.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1024</code></pre>
-</div>
-</div>
-</section>
-<section id="posterior" class="slide level2">
-<h2>Posterior</h2>
-
-<table align="center">
-<tbody><tr>
-<th>
-π
-</th>
-<th>
-0.2
-</th>
-<th>
-0.4
-</th>
-<th>
-0.8
-</th>
-</tr>
-<tr>
-<td>
-f(π)
-</td>
-<td>
-0.7
-</td>
-<td>
-0.2
-</td>
-<td>
-0.1
-</td>
-</tr>
-<tr>
-<td>
-L(π | y = 3)
-</td>
-<td>
-0.0512
-</td>
-<td>
-0.2304
-</td>
-<td>
-0.2048
-</td>
-</tr>
-<tr>
-<td>
-f(π | y = 3)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-
-</tbody></table>
-<div class="fragment">
-<p><span class="math inline">\(f(\pi=0.2 | y = 3) = \frac{f(\pi)L(\pi|y =3)}{f(y = 3)}\)</span></p>
-</div>
-<div class="fragment">
-<p><span class="math inline">\(= \frac{0.7 \times 0.0512}{0.1024}\)</span></p>
-</div>
-<div class="fragment">
-<p><span class="math inline">\(= 0.35\)</span></p>
-</div>
-</section>
-<section id="posterior-1" class="slide level2">
-<h2>Posterior</h2>
-
-<table align="center">
-<tbody><tr>
-<th>
-π
-</th>
-<th>
-0.2
-</th>
-<th>
-0.4
-</th>
-<th>
-0.8
-</th>
-</tr>
-<tr>
-<td>
-f(π)
-</td>
-<td>
-0.7
-</td>
-<td>
-0.2
-</td>
-<td>
-0.1
-</td>
-</tr>
-<tr>
-<td>
-L(π | y = 3)
-</td>
-<td>
-0.0512
-</td>
-<td>
-0.2304
-</td>
-<td>
-0.2048
-</td>
-</tr>
-<tr>
-<td>
-f(π | y = 3)
-</td>
-<td>
-0.35
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-
-</tbody></table>
-<div class="fragment">
-<p><span class="math inline">\(f(\pi=0.4 | y = 3) = \frac{f(\pi)L(\pi|y =3)}{f(y = 3)}\)</span></p>
-</div>
-<div class="fragment">
-<p><span class="math inline">\(= \frac{0.2 \times 0.2304}{0.1024}\)</span></p>
-</div>
-<div class="fragment">
-<p><span class="math inline">\(= 0.45\)</span></p>
-</div>
-</section>
-<section id="posterior-2" class="slide level2">
-<h2>Posterior</h2>
-
-<table align="center">
-<tbody><tr>
-<th>
-π
-</th>
-<th>
-0.2
-</th>
-<th>
-0.4
-</th>
-<th>
-0.8
-</th>
-</tr>
-<tr>
-<td>
-f(π)
-</td>
-<td>
-0.7
-</td>
-<td>
-0.2
-</td>
-<td>
-0.1
-</td>
-</tr>
-<tr>
-<td>
-L(π | y = 3)
-</td>
-<td>
-0.0512
-</td>
-<td>
-0.2304
-</td>
-<td>
-0.2048
-</td>
-</tr>
-<tr>
-<td>
-f(π | y = 3)
-</td>
-<td>
-0.35
-</td>
-<td>
-0.45
-</td>
-<td>
-</td>
-</tr>
-
-</tbody></table>
-<div class="fragment">
-<p><span class="math inline">\(f(\pi=0.8 | y = 3) = \frac{f(\pi)L(\pi|y =3)}{f(y = 3)}\)</span></p>
-</div>
-<div class="fragment">
-<p><span class="math inline">\(= \frac{0.1 \times 0.2048}{0.1024}\)</span></p>
-</div>
-<div class="fragment">
-<p><span class="math inline">\(= 0.2\)</span></p>
-</div>
-</section>
-<section id="posterior-3" class="slide level2">
-<h2>Posterior</h2>
-
-<table align="center">
-<tbody><tr>
-<th>
-π
-</th>
-<th>
-0.2
-</th>
-<th>
-0.4
-</th>
-<th>
-0.8
-</th>
-</tr>
-<tr>
-<td>
-f(π)
-</td>
-<td>
-0.7
-</td>
-<td>
-0.2
-</td>
-<td>
-0.1
-</td>
-</tr>
-<tr>
-<td>
-L(π | y = 3)
-</td>
-<td>
-0.0512
-</td>
-<td>
-0.2304
-</td>
-<td>
-0.2048
-</td>
-</tr>
-<tr>
-<td>
-f(π | y = 3)
-</td>
-<td>
-0.35
-</td>
-<td>
-0.45
-</td>
-<td>
-0.2
-</td>
-</tr>
-
-</tbody></table>
-</section>
-<section id="why-is-normalizing-constant-a-normalizing-constant" class="slide level2">
-<h2>Why is normalizing constant a “normalizing constant”?</h2>
-<div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1"><span class="math inline">\(\pi\)</span> = 0.2</a></li><li><a href="#tabset-1-2"><span class="math inline">\(\pi\)</span> = 0.4</a></li><li><a href="#tabset-1-3"><span class="math inline">\(\pi\)</span> = 0.8</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1">
-<p><span class="math inline">\(f(\pi=0.2 | y = 3) = \frac{f(\pi)L(\pi|y =3)}{f(y = 3)}\)</span></p>
-<p><span class="math inline">\(= \frac{0.7 \times 0.0512}{0.1024}\)</span></p>
-</div>
-<div id="tabset-1-2">
-<p><span class="math inline">\(f(\pi=0.4 | y = 3) = \frac{f(\pi)L(\pi|y =3)}{f(y = 3)}\)</span></p>
-<p><span class="math inline">\(= \frac{0.2 \times 0.2304}{0.1024}\)</span></p>
-</div>
-<div id="tabset-1-3">
-<p><span class="math inline">\(f(\pi=0.8 | y = 3) = \frac{f(\pi)L(\pi|y =3)}{f(y = 3)}\)</span></p>
-<p><span class="math inline">\(= \frac{0.1 \times 0.2048}{0.1024}\)</span></p>
-</div>
-</div>
-</div>
-</section>
-<section id="why-is-normalizing-constant-a-normalizing-constant-1" class="slide level2">
-<h2>Why is normalizing constant a “normalizing constant”?</h2>
-<div class="panel-tabset">
-<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1"><span class="math inline">\(\pi\)</span> = 0.2</a></li><li><a href="#tabset-2-2"><span class="math inline">\(\pi\)</span> = 0.4</a></li><li><a href="#tabset-2-3"><span class="math inline">\(\pi\)</span> = 0.8</a></li></ul>
-<div class="tab-content">
-<div id="tabset-2-1">
-<p><span class="math inline">\(f(\pi=0.2 | y = 3) = \frac{f(\pi)L(\pi|y =3)}{f(y = 3)}\)</span></p>
-<p><span class="math inline">\(= \frac{0.7 \times 0.0512}{0.1024}\)</span></p>
-<p><span class="math inline">\(\propto {0.7 \times 0.0512}\)</span></p>
-</div>
-<div id="tabset-2-2">
-<p><span class="math inline">\(f(\pi=0.4 | y = 3) = \frac{f(\pi)L(\pi|y =3)}{f(y = 3)}\)</span></p>
-<p><span class="math inline">\(= \frac{0.2 \times 0.2304}{0.1024}\)</span></p>
-<p><span class="math inline">\(\propto 0.2 \times 0.2304\)</span></p>
-</div>
-<div id="tabset-2-3">
-<p><span class="math inline">\(f(\pi=0.8 | y = 3) = \frac{f(\pi)L(\pi|y =3)}{f(y = 3)}\)</span></p>
-<p><span class="math inline">\(= \frac{0.1 \times 0.2048}{0.1024}\)</span></p>
-<p><span class="math inline">\(\propto 0.1 \times 0.2048\)</span></p>
-</div>
+<pre><code>       mean mode        var        sd
+1 0.4166667  0.4 0.01869658 0.1367354</code></pre>
 </div>
 </div>
 </section></section>
 <section>
-<section id="fpiy-propto-fpilpiy" class="title-slide slide level1 center">
-<h1><span class="math display">\[f(\pi|y) \propto f(\pi)L(\pi|y)\]</span></h1>
+<section id="the-beta-binomial-model" class="title-slide slide level1 center">
+<h1>The Beta-Binomial Model</h1>
+<p>The notes for this lecture are derived from <a href="https://www.bayesrulesbook.com/chapter-3">Chapter 3 of the Bayes Rules! book</a></p>
+</section>
+<section id="bike-ownership" class="slide level2">
+<h2>Bike ownership</h2>
+<p>The transportation office at our school wants to know <span class="math inline">\(\pi\)</span> the proportion of people who own bikes on campus so that they can build bike racks accordingly. The staff at the office think that the <span class="math inline">\(\pi\)</span> is more likely to be somewhere 0.05 to 0.25. The plot below shows their prior distribution. Write out a reasonable <span class="math inline">\(f(\pi)\)</span>. Calculate the prior expected value, mode, and variance.</p>
 
-</section>
-<section id="in-summary" class="slide level2">
-<h2>In summary</h2>
-<p>Every Bayesian analysis consists of three common steps.</p>
-<p>1.Construct a <strong>prior model</strong> for your variable of interest, <span class="math inline">\(\pi\)</span>.<br>
-A prior model specifies two important pieces of information: the possible values of <span class="math inline">\(\pi\)</span> and the relative prior plausibility of each.</p>
-</section>
-<section id="section-1" class="slide level2">
-<h2></h2>
-<p>2.Upon observing data <span class="math inline">\(Y = y\)</span>, define the <strong>likelihood function</strong> <span class="math inline">\(L(\pi|y)\)</span>.<br>
-As a first step, we summarize the dependence of <span class="math inline">\(Y\)</span> on <span class="math inline">\(\pi\)</span> via a <strong>conditional pmf</strong> <span class="math inline">\(f(y|\pi)\)</span>. The likelihood function is then defined by <span class="math inline">\(L(\pi|y) = f(y|\pi)\)</span> and can be used to compare the relative likelihood of different <span class="math inline">\(\pi\)</span> values in light of data <span class="math inline">\(Y = y\)</span>.</p>
-</section>
-<section id="section-2" class="slide level2">
-<h2></h2>
-<p>3.Build the <strong>posterior model</strong> of <span class="math inline">\(\pi\)</span> via Bayes’ Rule.<br>
-By Bayes’ Rule, the posterior model is constructed by balancing the prior and likelihood:</p>
-<p><span class="math display">\[\text{posterior} = \frac{\text{prior} \cdot \text{likelihood}}{\text{normalizing constant}} \propto \text{prior} \cdot \text{likelihood}\]</span> More technically,</p>
-<p><span class="math display">\[f(\pi|y) = \frac{f(\pi)L(\pi|y)}{f(y)} \propto f(\pi)L(\pi|y)\]</span></p>
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="plotting-the-prior" class="slide level2">
+<h2>Plotting the prior</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">plot_beta</span>(<span class="dv">5</span>, <span class="dv">35</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
-<img src="https://www.stats115.com/img/logo.png" class="slide-logo r-stretch"><div class="footer footer-default">
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-16-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="summarizing-the-prior" class="slide level2">
+<h2>Summarizing the prior</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">summarize_beta</span>(<span class="dv">5</span>, <span class="dv">35</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   mean      mode         var         sd
+1 0.125 0.1052632 0.002667683 0.05164962</code></pre>
+</div>
+</div>
+</section>
+<section id="posterior-for-the-beta-binomial-model" class="slide level2">
+<h2>Posterior for the Beta-Binomial Model</h2>
+<p>Let <span class="math inline">\(\pi \sim \text{Beta}(\alpha, \beta)\)</span> and <span class="math inline">\(Y|n \sim \text{Bin}(n,\pi)\)</span>.</p>
+<div class="fragment">
+<p><span class="math inline">\(f(\pi|y) \propto \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}\pi^{\alpha-1} (1-\pi)^{\beta-1} {n \choose y}\pi^y(1-\pi)^{n-y}\)</span></p>
+</div>
+<div class="fragment">
+<p><span class="math inline">\(f(\pi|y) \propto \pi^{(\alpha+y)-1} (1-\pi)^{(\beta+n-y)-1}\)</span></p>
+</div>
+<div class="fragment">
+<p><span class="math inline">\(\pi|y \sim \text{Beta}(\alpha +y, \beta+n-y)\)</span></p>
+</div>
+<div class="fragment">
+<p><span class="math inline">\(f(\pi|y) = \frac{\Gamma(\alpha+\beta+n)}{\Gamma(\alpha+y)\Gamma(\beta+n-y)} \pi^{(\alpha+y)-1} (1-\pi)^{(\beta+n-y)-1}\)</span></p>
+</div>
+</section>
+<section id="conjugate-prior" class="slide level2">
+<h2>Conjugate prior</h2>
+<p>We say that <span class="math inline">\(f(\pi)\)</span> is a conjugate prior for <span class="math inline">\(L(\pi|y)\)</span> if the posterior, <span class="math inline">\(f(\pi|y) \propto f(\pi)L(\pi|y)\)</span>, is from the same model family as the prior.</p>
+<p>Thus, Beta distribution is a conjugate prior for the Binomial likelihood model since the posterior also follows a Beta distribution.</p>
+</section>
+<section id="bike-ownership-posterior" class="slide level2">
+<h2>Bike ownership posterior</h2>
+<p>The transportation office decides to collect some data and samples 50 people on campus and asks them whether they own a bike or not. It turns out that 25 of them do! What is the posterior distribution of <span class="math inline">\(\pi\)</span> after having observed this data?</p>
+<div class="fragment">
+<p><span class="math inline">\(\pi|y \sim \text{Beta}(\alpha +y, \beta+n-y)\)</span></p>
+</div>
+<div class="fragment">
+<p><span class="math inline">\(\pi|y \sim \text{Beta}(5 +25, 35+50-25)\)</span></p>
+</div>
+<div class="fragment">
+<p><span class="math inline">\(\pi|y \sim \text{Beta}(30, 60)\)</span></p>
+</div>
+</section>
+<section id="plotting-the-posterior" class="slide level2">
+<h2>Plotting the posterior</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">plot_beta</span>(<span class="dv">30</span>, <span class="dv">60</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-19-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="summarizing-the-posterior" class="slide level2">
+<h2>Summarizing the posterior</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">summarize_beta</span>(<span class="dv">30</span>,<span class="dv">60</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       mean      mode         var         sd
+1 0.3333333 0.3295455 0.002442002 0.04941662</code></pre>
+</div>
+</div>
+</section>
+<section id="plot-summary" class="slide level2">
+<h2>Plot summary</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">plot_beta</span>(<span class="dv">30</span>, <span class="dv">60</span>, <span class="at">mean =</span> <span class="cn">TRUE</span>, <span class="at">mode =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-22-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="bike-ownership-balancing-act" class="slide level2">
+<h2>Bike ownership: balancing act</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">plot_beta_binomial</span>(<span class="at">alpha =</span> <span class="dv">5</span>, <span class="at">beta =</span> <span class="dv">35</span>,</span>
+<span id="cb13-2"><a href="#cb13-2"></a>                   <span class="at">y =</span> <span class="dv">25</span>, <span class="at">n =</span> <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-24-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="posterior-descriptives" class="slide level2">
+<h2>Posterior Descriptives</h2>
+<p><span class="math inline">\(\pi|(Y=y) \sim \text{Beta}(\alpha+y, \beta+n-y)\)</span></p>
+<p><span class="math display">\[E(\pi | (Y=y)) = \frac{\alpha + y}{\alpha + \beta + n}\]</span> <span class="math display">\[\text{Mode}(\pi | (Y=y))  = \frac{\alpha + y - 1}{\alpha + \beta + n - 2} \]</span> <span class="math display">\[\text{Var}(\pi | (Y=y))   = \frac{(\alpha + y)(\beta + n - y)}{(\alpha + \beta + n)^2(\alpha + \beta + n + 1)}\\\]</span></p>
+</section>
+<section id="bike-ownership---descriptives-of-the-posterior" class="slide level2">
+<h2>Bike ownership - descriptives of the posterior</h2>
+<p>What is the descriptive measures (expected value, mode, and variance) of the posterior distribution for the bike ownership example?</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">summarize_beta_binomial</span>(<span class="dv">5</span>, <span class="dv">35</span>, <span class="at">y =</span> <span class="dv">25</span>, <span class="at">n =</span> <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      model alpha beta      mean      mode         var         sd
+1     prior     5   35 0.1250000 0.1052632 0.002667683 0.05164962
+2 posterior    30   60 0.3333333 0.3295455 0.002442002 0.04941662</code></pre>
+</div>
+</div>
+<p><img src="https://www.stats115.com/img/logo.png" class="slide-logo"></p>
+<div class="footer footer-default">
 <p><a href="https://stats115.com">stats115.com</a></p>
+</div>
 </div>
 </section></section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="2a-bayes-rv_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="3a-beta-binomial_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="2a-bayes-rv_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="2a-bayes-rv_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="2a-bayes-rv_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="2a-bayes-rv_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="2a-bayes-rv_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="3a-beta-binomial_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="3a-beta-binomial_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="3a-beta-binomial_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="3a-beta-binomial_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="3a-beta-binomial_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="2a-bayes-rv_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="2a-bayes-rv_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="2a-bayes-rv_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="2a-bayes-rv_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="3a-beta-binomial_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="3a-beta-binomial_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="3a-beta-binomial_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="3a-beta-binomial_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
