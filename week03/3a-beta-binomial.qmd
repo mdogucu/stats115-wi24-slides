@@ -124,6 +124,9 @@ Let $\pi$ be a random variable which can take any value between 0 and 1, ie. $\p
 Then the variability in $\pi$ might be well modeled by a Beta model with __shape parameters__ $\alpha > 0$ and $\beta > 0$: 
 
 $$\pi \sim \text{Beta}(\alpha, \beta)$$
+
+##
+
 The Beta model is specified by continuous pdf
 \begin{equation}
 f(\pi) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \pi^{\alpha-1} (1-\pi)^{\beta-1} \;\; \text{ for } \pi \in [0,1] 
