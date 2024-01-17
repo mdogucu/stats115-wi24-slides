@@ -465,9 +465,13 @@ f(\pi) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \pi^{\alpha-
 <section id="beta-prior-model-1" class="slide level2">
 <h2>Beta Prior model</h2>
 <div class="pull-left">
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
 <p><img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -483,9 +487,13 @@ f(\pi) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \pi^{\alpha-
 <h2>Beta Prior model</h2>
 <p><span class="math inline">\(\pi \sim \text{Beta}(3, 8)\)</span></p>
 <div class="pull-left">
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
 <p><img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -509,9 +517,9 @@ f(\pi) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \pi^{\alpha-
 <p>Use the <code>plot_beta()</code> function in the <code>bayesrules</code> package to try different shape parameters. Example:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">plot_beta</span>(<span class="at">alpha =</span> <span class="dv">5</span>, <span class="at">beta =</span> <span class="dv">7</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 
-<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+</div>
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch quarto-figure-center"></section>
 <section id="beta-descriptives" class="slide level2">
 <h2>Beta Descriptives</h2>
 <p><span class="math display">\[E(\pi) = \frac{\alpha}{\alpha + \beta}\]</span></p>
@@ -537,15 +545,11 @@ f(\pi) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \pi^{\alpha-
 <section id="bike-ownership" class="slide level2">
 <h2>Bike ownership</h2>
 <p>The transportation office at our school wants to know <span class="math inline">\(\pi\)</span> the proportion of people who own bikes on campus so that they can build bike racks accordingly. The staff at the office think that the <span class="math inline">\(\pi\)</span> is more likely to be somewhere 0.05 to 0.25. The plot below shows their prior distribution. Write out a reasonable <span class="math inline">\(f(\pi)\)</span>. Calculate the prior expected value, mode, and variance.</p>
-
-<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="plotting-the-prior" class="slide level2">
-<h2>Plotting the prior</h2>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">plot_beta</span>(<span class="dv">5</span>, <span class="dv">35</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 
-<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-16-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+</div>
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-13-1.png" width="960" class="r-stretch quarto-figure-center"></section>
 <section id="summarizing-the-prior" class="slide level2">
 <h2>Summarizing the prior</h2>
 <div class="cell">
@@ -590,15 +594,15 @@ f(\pi) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \pi^{\alpha-
 <p><span class="math inline">\(\pi|y \sim \text{Beta}(30, 60)\)</span></p>
 </div>
 </section>
-<section id="plotting-the-posterior" class="slide level2">
-<h2>Plotting the posterior</h2>
-<div class="cell">
+<section id="plotting-the-prior" class="slide level2">
+<h2>Plotting the prior</h2>
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">plot_beta</span>(<span class="dv">30</span>, <span class="dv">60</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 
-<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-19-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="summarizing-the-posterior" class="slide level2">
-<h2>Summarizing the posterior</h2>
+</div>
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-15-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="summarizing-the-prior-1" class="slide level2">
+<h2>Summarizing the prior</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">summarize_beta</span>(<span class="dv">30</span>,<span class="dv">60</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -609,19 +613,19 @@ f(\pi) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \pi^{\alpha-
 </section>
 <section id="plot-summary" class="slide level2">
 <h2>Plot summary</h2>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">plot_beta</span>(<span class="dv">30</span>, <span class="dv">60</span>, <span class="at">mean =</span> <span class="cn">TRUE</span>, <span class="at">mode =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 
-<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-22-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+</div>
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-17-1.png" width="960" class="r-stretch quarto-figure-center"></section>
 <section id="bike-ownership-balancing-act" class="slide level2">
 <h2>Bike ownership: balancing act</h2>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">plot_beta_binomial</span>(<span class="at">alpha =</span> <span class="dv">5</span>, <span class="at">beta =</span> <span class="dv">35</span>,</span>
 <span id="cb13-2"><a href="#cb13-2"></a>                   <span class="at">y =</span> <span class="dv">25</span>, <span class="at">n =</span> <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 
-<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-24-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+</div>
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-18-1.png" width="960" class="r-stretch quarto-figure-center"></section>
 <section id="posterior-descriptives" class="slide level2">
 <h2>Posterior Descriptives</h2>
 <p><span class="math inline">\(\pi|(Y=y) \sim \text{Beta}(\alpha+y, \beta+n-y)\)</span></p>
@@ -639,10 +643,159 @@ f(\pi) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \pi^{\alpha-
 2 posterior    30   60 0.3333333 0.3295455 0.002442002 0.04941662</code></pre>
 </div>
 </div>
+</div>
+</section></section>
+<section>
+<section id="simulating-the-beta-binomial-model" class="title-slide slide level1 center">
+<h1>Simulating the Beta-Binomial Model</h1>
+
+</section>
+<section id="data-context" class="slide level2">
+<h2>Data Context</h2>
+<p>Let <span class="math inline">\(\pi\)</span> represent the proportion of voters that support Michelle in the upcoming election.</p>
+</section>
+<section id="prior" class="slide level2">
+<h2>Prior</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">plot_beta</span>(<span class="dv">45</span>, <span class="dv">55</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-20-1.png" width="960" class="r-stretch"></section>
+<section id="data-and-the-posterior" class="slide level2">
+<h2>Data and the Posterior</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">summarize_beta_binomial</span>(<span class="dv">45</span>, <span class="dv">55</span>, <span class="at">y =</span> <span class="dv">30</span>, <span class="at">n =</span> <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      model alpha beta mean      mode         var         sd
+1     prior    45   55 0.45 0.4489796 0.002450495 0.04950248
+2 posterior    75   75 0.50 0.5000000 0.001655629 0.04068942</code></pre>
+</div>
+</div>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">plot_beta_binomial</span>(<span class="dv">45</span>, <span class="dv">55</span>, <span class="at">y =</span> <span class="dv">30</span>, <span class="at">n =</span> <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-22-1.png" width="960" class="r-stretch"></section>
+<section id="section-3" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">set.seed</span>(<span class="dv">84735</span>)</span>
+<span id="cb20-2"><a href="#cb20-2"></a>michelle_sim <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">pi =</span> <span class="fu">rbeta</span>(<span class="dv">10000</span>, <span class="dv">45</span>, <span class="dv">55</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section-4" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">head</span>(michelle_sim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         pi
+1 0.4884391
+2 0.4430527
+3 0.4953429
+4 0.4633678
+5 0.4963052
+6 0.5495968</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">tail</span>(michelle_sim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             pi
+9995  0.4741776
+9996  0.3756744
+9997  0.4660905
+9998  0.4791408
+9999  0.4394663
+10000 0.4229081</code></pre>
+</div>
+</div>
+</section>
+<section id="section-5" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">set.seed</span>(<span class="dv">84735</span>)</span>
+<span id="cb25-2"><a href="#cb25-2"></a>michelle_sim <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">pi =</span> <span class="fu">rbeta</span>(<span class="dv">10000</span>, <span class="dv">45</span>, <span class="dv">55</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">rbinom</span>(<span class="dv">10000</span>, <span class="at">size =</span> <span class="dv">50</span>, <span class="at">prob =</span> pi))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section-6" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>         pi  y
+1 0.4884391 23
+2 0.4430527 14
+3 0.4953429 35
+4 0.4633678 29
+5 0.4963052 36
+6 0.5495968 26</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             pi  y
+9995  0.4741776 24
+9996  0.3756744 13
+9997  0.4660905 25
+9998  0.4791408 21
+9999  0.4394663 24
+10000 0.4229081 21</code></pre>
+</div>
+</div>
+</section>
+<section id="section-7" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>michelle_posterior <span class="ot">&lt;-</span> michelle_sim <span class="sc">|&gt;</span> </span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">filter</span>(y <span class="sc">==</span> <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">nrow</span>(michelle_posterior)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 211</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><span class="math inline">\(f(\pi|y =30)\)</span></p>
+</div>
+</section>
+<section id="section-8" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">ggplot</span>(michelle_posterior, <span class="fu">aes</span>(<span class="at">x =</span> pi)) <span class="sc">+</span> </span>
+<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">geom_histogram</span>(<span class="at">color =</span> <span class="st">"white"</span>, <span class="at">binwidth =</span> <span class="fl">0.025</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-29-1.png" width="960" class="r-stretch"></section>
+<section id="section-9" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">ggplot</span>(michelle_posterior, <span class="fu">aes</span>(<span class="at">x =</span> pi)) <span class="sc">+</span> </span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb32-3"><a href="#cb32-3"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-30-1.png" width="960" class="r-stretch"></section>
+<section id="section-10" class="slide level2">
+<h2></h2>
+<div class="pull-left">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-31-1.png" width="960"></p>
+</div>
+</div>
+</div>
+<div class="pull-right">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-32-1.png" width="960"></p>
+</div>
+</div>
+</div>
 <p><img src="https://www.stats115.com/img/logo.png" class="slide-logo"></p>
 <div class="footer footer-default">
 <p><a href="https://stats115.com">stats115.com</a></p>
-</div>
 </div>
 </section></section>
     </div>

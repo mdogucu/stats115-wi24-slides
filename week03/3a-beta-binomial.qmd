@@ -68,9 +68,10 @@ Beyoncé thinks that it is extremely easy to get into this program.
 
 ## Morteza's prior
 
-```{r echo = FALSE, fig.align='center'}
-library(bayesrules)
-library(ggplot2)
+```{r}
+#| echo: false
+#| fig-align: center
+
 plot_beta(1, 5) +
     theme(text = element_text(size=20)) 
 
@@ -80,7 +81,10 @@ plot_beta(1, 5) +
 
 ## Jared's prior
 
-```{r echo = FALSE, fig.align='center'}
+```{r}
+#| echo: false
+#| fig-align: center
+
 plot_beta(2, 5) +
     theme(text = element_text(size=20)) 
 
@@ -90,7 +94,10 @@ plot_beta(2, 5) +
 
 ## Erin's prior
 
-```{r echo = FALSE, fig.align='center'}
+```{r}
+#| echo: false
+#| fig-align: center
+
 plot_beta(1, 1) +
     theme(text = element_text(size=20)) 
 
@@ -100,7 +107,10 @@ plot_beta(1, 1) +
 
 ## Xuan's prior
 
-```{r echo = FALSE, fig.align='center'}
+```{r}
+#| echo: false
+#| fig-align: center
+
 plot_beta(5, 3) +
     theme(text = element_text(size=20)) 
 
@@ -110,10 +120,12 @@ plot_beta(5, 3) +
 
 ## Beyoncé's prior
 
-```{r echo = FALSE, fig.align='center'}
+```{r}
+#| echo: false
+#| fig-align: center
+
 plot_beta(5, 1) +
     theme(text = element_text(size=20)) 
-
 ```
 
 
@@ -137,7 +149,10 @@ f(\pi) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \pi^{\alpha-
 
 :::{.pull-left}
 
-```{r echo = FALSE, fig.height=5.5}
+```{r}
+#| echo: false
+#| fig-align: center
+
 plot_beta(3, 8) +
   geom_segment(aes(x = 0.50, y = 0, xend = 0.50, yend = dbeta(0.50, 3,8)), color = "orange2") +
     annotate("text", label = "(0.5, ?)", x = 0.6, y = 0.9, size = 8, colour = "orange2")
@@ -171,7 +186,10 @@ $f(\pi) = 0.703125$
 $\pi \sim \text{Beta}(3, 8)$
 
 :::{.pull-left}
-```{r echo = FALSE, fig.height=5.5}
+
+```{r}
+#| echo: false
+#| fig-align: center
 plot_beta(3, 8) +
   geom_segment(aes(x = 0.50, y = 0, xend = 0.50, yend = dbeta(0.50, 3,8)), color = "orange2") +
     annotate("text", label = "(0.5, ?)", x = 0.6, y = 0.9, size = 8, colour = "orange2")
@@ -199,8 +217,9 @@ dbeta(x = 0.5,
 
 ## Plotting Beta Prior
 
-```{r echo = FALSE, message = FALSE, fig.align='center'}
-library(tidyverse)
+```{r}
+#| echo: false
+#| fig-align: center
 # Set up beta data
 
 alpha <- c(1,1,3,1,5,20,7,2,5)
@@ -260,16 +279,10 @@ ggplot(betas, aes(x = x, y = y)) +
 
 Use the `plot_beta()` function in the `bayesrules` package to try different shape parameters. Example:
 
-```{r fig.align="center", fig.height=3, eval = FALSE}
+```{r}
+#| fig-align: center
 plot_beta(alpha = 5, beta = 7) 
 ```
-
-```{r fig.align="center", fig.height=3, echo = FALSE}
-plot_beta(alpha = 5, beta = 7) +
-  theme(text = element_text(size=20)) 
-
-```
-
 
 
 ## Beta Descriptives
@@ -285,7 +298,6 @@ $$\text{Var}(\pi) = \frac{\alpha \beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}$
 
 Use the `summarize_beta()` function in the `bayesrules` package to find the mean, mode, and variance of various Beta distributions. Example:
 
-
 ```{r}
 summarize_beta(alpha = 5, beta = 7)
 ```
@@ -296,21 +308,12 @@ The notes for this lecture are derived from  [Chapter 3 of the Bayes Rules! book
 
 
 ## Bike ownership
+
 The transportation office at our school wants to know $\pi$ the proportion of people who own bikes on campus so that they can build bike racks accordingly. The staff at the office think that the $\pi$ is more likely to be somewhere 0.05 to 0.25. The plot below shows their prior distribution. Write out a reasonable $f(\pi)$. Calculate the prior expected value, mode, and variance. 
 
 
-```{r fig.align='center', fig.height=3.5, echo = FALSE}
-plot_beta(5, 35) 
-```
-
-
-## Plotting the prior
-
-```{r eval = FALSE}
-plot_beta(5, 35) 
-```
-
-```{r fig.align='center', fig.height=4, echo = FALSE}
+```{r}
+#| fig-align: center
 plot_beta(5, 35) 
 ```
 
@@ -373,55 +376,35 @@ $\pi|y \sim \text{Beta}(30, 60)$
 
 
 
-## Plotting the posterior
+## Plotting the prior
 
-```{r eval = FALSE}
+```{r}
+#| fig-align: center
 plot_beta(30, 60) 
 ```
 
-```{r fig.align='center', fig.height=4, echo = FALSE}
-plot_beta(30, 60) +
-    theme(text = element_text(size=20)) 
-```
-
-
-
-## Summarizing the posterior
+## Summarizing the prior
 
 ```{r}
 summarize_beta(30,60)
 ```
 
 
-
-
-
 ## Plot summary
 
-```{r eval = FALSE}
+```{r}
+#| fig-align: center
 plot_beta(30, 60, mean = TRUE, mode = TRUE) 
-```
-
-```{r fig.align='center', fig.height=4, echo = FALSE}
-plot_beta(30, 60, mean = TRUE, mode = TRUE) +
-    theme(text = element_text(size=20)) 
 ```
 
 
 ## Bike ownership: balancing act
 
-```{r eval = FALSE}
+```{r}
+#| fig-align: center
 plot_beta_binomial(alpha = 5, beta = 35,
                    y = 25, n = 50)
 ```
-
-```{r fig.align='center', fig.height=5, echo = FALSE}
-plot_beta_binomial(alpha = 5, beta = 35,
-                   y = 25, n = 50) +
-      theme(text = element_text(size=20)) 
-
-```
-
 
 
 ## Posterior Descriptives
@@ -444,3 +427,116 @@ What is the descriptive measures (expected value, mode, and variance) of the pos
 summarize_beta_binomial(5, 35, y = 25, n = 50)
 ```
 
+# Simulating the Beta-Binomial Model
+
+
+## Data Context
+
+Let $\pi$ represent the proportion of voters that support Michelle in the upcoming election.
+
+## Prior
+
+```{r}
+plot_beta(45, 55)
+```
+
+
+## Data and the Posterior
+
+```{r}
+summarize_beta_binomial(45, 55, y = 30, n = 50)
+```
+
+##
+
+```{r}
+plot_beta_binomial(45, 55, y = 30, n = 50)
+```
+
+##
+
+```{r}
+set.seed(84735)
+michelle_sim <- data.frame(pi = rbeta(10000, 45, 55)) 
+```
+
+##
+
+```{r}
+head(michelle_sim)
+tail(michelle_sim)
+```
+
+##
+
+```{r}
+set.seed(84735)
+michelle_sim <- data.frame(pi = rbeta(10000, 45, 55)) |> 
+  mutate(y = rbinom(10000, size = 50, prob = pi))
+```
+
+##
+
+```{r echo=FALSE}
+head(michelle_sim)
+tail(michelle_sim)
+```
+
+##
+
+```{r}
+michelle_posterior <- michelle_sim |> 
+  filter(y == 30)
+```
+
+. . .
+
+```{r}
+nrow(michelle_posterior)
+```
+
+. . .
+
+$f(\pi|y =30)$
+
+##
+
+```{r}
+ggplot(michelle_posterior, aes(x = pi)) + 
+  geom_histogram(color = "white", binwidth = 0.025)
+```
+
+
+##
+
+```{r}
+ggplot(michelle_posterior, aes(x = pi)) + 
+  geom_density() +
+  xlim(0,1)
+```
+
+##
+
+:::{.pull-left}
+
+
+```{r echo=FALSE}
+plot_beta_binomial(45, 55, y = 30, n = 50, 
+                   prior = FALSE, likelihood=FALSE) +
+  theme(legend.position = "none") +
+  labs(title = "Beta(75,75)")
+```
+
+:::
+
+:::{.pull-right}
+
+
+```{r echo=FALSE}
+ggplot(michelle_posterior, aes(x = pi)) + 
+  geom_density() +
+  xlim(0,1) +
+  labs(title = "Posterior Simulation")
+```
+
+:::
