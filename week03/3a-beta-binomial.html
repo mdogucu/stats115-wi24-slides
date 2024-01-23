@@ -478,9 +478,9 @@ f(\pi) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \pi^{\alpha-
 <div class="pull-right">
 <p><span class="math inline">\(\pi \sim \text{Beta}(3, 8)\)</span></p>
 <p><span class="math inline">\(f(\pi) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \pi^{\alpha-1} (1-\pi)^{\beta-1}\)</span></p>
-<p><span class="math inline">\(f(\pi) = \frac{\Gamma(3 + 11)}{\Gamma(3)\Gamma(8)} 0.5^{3-1} (1-0.5)^{8-1}\)</span></p>
-<p><span class="math inline">\(f(\pi) = \frac{13!}{2!7!} 0.5^{3-1} (1-0.5)^{8-1}\)</span></p>
-<p><span class="math inline">\(f(\pi) = 0.703125\)</span></p>
+<p><span class="math inline">\(f(0.5) = \frac{\Gamma(3 + 8)}{\Gamma(3)\Gamma(8)} 0.5^{3-1} (1-0.5)^{8-1}\)</span></p>
+<p><span class="math inline">\(f(0.5) = \frac{10!}{2!7!} 0.5^{3-1} (1-0.5)^{8-1}\)</span></p>
+<p><span class="math inline">\(f(0.5) = 0.703125\)</span></p>
 </div>
 </section>
 <section id="beta-prior-model-2" class="slide level2">
@@ -594,15 +594,15 @@ f(\pi) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \pi^{\alpha-
 <p><span class="math inline">\(\pi|y \sim \text{Beta}(30, 60)\)</span></p>
 </div>
 </section>
-<section id="plotting-the-prior" class="slide level2">
-<h2>Plotting the prior</h2>
+<section id="plotting-the-posterior" class="slide level2">
+<h2>Plotting the posterior</h2>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">plot_beta</span>(<span class="dv">30</span>, <span class="dv">60</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="3a-beta-binomial_files/figure-revealjs/unnamed-chunk-15-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="summarizing-the-prior-1" class="slide level2">
-<h2>Summarizing the prior</h2>
+<section id="summarizing-the-posterior" class="slide level2">
+<h2>Summarizing the posterior</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">summarize_beta</span>(<span class="dv">30</span>,<span class="dv">60</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">

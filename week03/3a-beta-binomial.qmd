@@ -171,11 +171,11 @@ $\pi \sim \text{Beta}(3, 8)$
 
 $f(\pi) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \pi^{\alpha-1} (1-\pi)^{\beta-1}$ 
 
-$f(\pi) = \frac{\Gamma(3 + 11)}{\Gamma(3)\Gamma(8)} 0.5^{3-1} (1-0.5)^{8-1}$ 
+$f(0.5) = \frac{\Gamma(3 + 8)}{\Gamma(3)\Gamma(8)} 0.5^{3-1} (1-0.5)^{8-1}$ 
 
-$f(\pi) = \frac{13!}{2!7!} 0.5^{3-1} (1-0.5)^{8-1}$
+$f(0.5) = \frac{10!}{2!7!} 0.5^{3-1} (1-0.5)^{8-1}$
 
-$f(\pi) = 0.703125$
+$f(0.5) = 0.703125$
 
 
 :::
@@ -376,14 +376,14 @@ $\pi|y \sim \text{Beta}(30, 60)$
 
 
 
-## Plotting the prior
+## Plotting the posterior
 
 ```{r}
 #| fig-align: center
 plot_beta(30, 60) 
 ```
 
-## Summarizing the prior
+## Summarizing the posterior
 
 ```{r}
 summarize_beta(30,60)
