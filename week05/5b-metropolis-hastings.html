@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="5a-grid-approximation_files/libs/clipboard/clipboard.min.js"></script>
-<script src="5a-grid-approximation_files/libs/quarto-html/tabby.min.js"></script>
-<script src="5a-grid-approximation_files/libs/quarto-html/popper.min.js"></script>
-<script src="5a-grid-approximation_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="5a-grid-approximation_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="5a-grid-approximation_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="5a-grid-approximation_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="5a-grid-approximation_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="5b-metropolis-hastings_files/libs/clipboard/clipboard.min.js"></script>
+<script src="5b-metropolis-hastings_files/libs/quarto-html/tabby.min.js"></script>
+<script src="5b-metropolis-hastings_files/libs/quarto-html/popper.min.js"></script>
+<script src="5b-metropolis-hastings_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="5b-metropolis-hastings_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="5b-metropolis-hastings_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="5b-metropolis-hastings_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="5b-metropolis-hastings_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.450">
 
   <meta name="author" content="Dr.&nbsp;Mine Dogucu">
-  <title>Posterior Approximation</title>
+  <title>MCMC under the Hood</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="5a-grid-approximation_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="5a-grid-approximation_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="5b-metropolis-hastings_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="5b-metropolis-hastings_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -95,11 +95,11 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="5a-grid-approximation_files/libs/revealjs/dist/theme/quarto.css">
-  <link href="5a-grid-approximation_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="5a-grid-approximation_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="5a-grid-approximation_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="5a-grid-approximation_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="5b-metropolis-hastings_files/libs/revealjs/dist/theme/quarto.css">
+  <link href="5b-metropolis-hastings_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="5b-metropolis-hastings_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="5b-metropolis-hastings_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="5b-metropolis-hastings_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -390,7 +390,7 @@
     <div class="slides">
 
 <section id="title-slide" data-background-image="https://stats115.com/img/logo.png" data-background-position="50% 85%" data-background-size="5%" class="quarto-title-block center">
-  <h1 class="title">Posterior Approximation</h1>
+  <h1 class="title">MCMC under the Hood</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -403,272 +403,208 @@ Dr.&nbsp;Mine Dogucu
 </section>
 <section id="section" class="slide level2">
 <h2></h2>
-<p>The notes for this lecture are derived from <a href="https://www.bayesrulesbook.com/chapter-5">Chapter 6 of the Bayes Rules! book</a></p>
-</section>
-<section>
-<section id="grid-approximation" class="title-slide slide level1 center">
-<h1>Grid approximation</h1>
-
-</section>
-<section id="specifying-the-posterior" class="slide level2">
-<h2>Specifying the Posterior</h2>
-<p><span class="math inline">\(Y | \pi \sim \text{Bin}(10, \pi)\)</span><br>
-<span class="math inline">\(\pi \sim \text{Beta}(2,2)\)</span></p>
-<div class="fragment">
-<p>Suppose <span class="math inline">\(Y = 9\)</span></p>
-</div>
-<div class="fragment">
-<p>Then <span class="math inline">\(\pi|(Y = 9) \sim \text{Beta}(11,3)\)</span></p>
-</div>
-</section>
-<section id="step-1-define-a-grid-of-6-pi-values" class="slide level2">
-<h2>Step 1: Define a grid of 6 pi values</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>pi_grid   <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">length =</span> <span class="dv">6</span>)</span>
-<span id="cb1-2"><a href="#cb1-2"></a>pi_grid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0 0.2 0.4 0.6 0.8 1.0</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>grid_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(pi_grid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="step-2-evaluate-the-prior-and-likelihood-at-each-pi" class="slide level2">
-<h2>Step 2: Evaluate the prior and likelihood at each pi</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>grid_data <span class="ot">&lt;-</span> grid_data <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">mutate</span>(<span class="at">prior =</span> <span class="fu">dbeta</span>(pi_grid, <span class="dv">2</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<div class="{pull-left}">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>grid_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  pi_grid prior
-1     0.0  0.00
-2     0.2  0.96
-3     0.4  1.44
-4     0.6  1.44
-5     0.8  0.96
-6     1.0  0.00</code></pre>
-</div>
-</div>
-</div>
-</div>
+<p>The notes for this lecture are derived from <a href="https://www.bayesrulesbook.com/chapter-7">Chapter 7 of the Bayes Rules! book</a></p>
 </section>
 <section id="section-1" class="slide level2">
 <h2></h2>
-<div class="{pull-right}">
+<p><span class="math inline">\(Y \sim \text{Pois}(\lambda)\)</span><br>
+<span class="math inline">\(\lambda \sim\text{Gamma}(1,1)\)</span><br>
+<span class="math inline">\(Y = 0\)</span></p>
 <div class="cell">
-<div class="cell-output-display">
-<p><img data-src="5a-grid-approximation_files/figure-revealjs/unnamed-chunk-5-1.png" width="960"></p>
-</div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>bayesrules<span class="sc">::</span><span class="fu">summarize_gamma_poisson</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="at">sum_y =</span> <span class="dv">0</span>, <span class="at">n =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      model shape rate mean mode  var  sd
+1     prior     1    1  1.0    0 1.00 1.0
+2 posterior     1    2  0.5    0 0.25 0.5</code></pre>
 </div>
 </div>
 </section>
-<section id="step-2-evaluate-the-prior-and-likelihood-at-each-pi-1" class="slide level2">
-<h2>Step 2: Evaluate the prior and likelihood at each pi</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>grid_data <span class="ot">&lt;-</span> grid_data <span class="sc">|&gt;</span> </span>
-<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">mutate</span>(<span class="at">prior =</span> <span class="fu">dbeta</span>(pi_grid, <span class="dv">2</span>, <span class="dv">2</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-3"><a href="#cb7-3"></a>  <span class="fu">mutate</span>(<span class="at">likelihood =</span> <span class="fu">dbinom</span>(<span class="dv">9</span>, <span class="dv">10</span>, pi_grid))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<div class="{pull-left}">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>grid_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  pi_grid prior  likelihood
-1     0.0  0.00 0.000000000
-2     0.2  0.96 0.000004096
-3     0.4  1.44 0.001572864
-4     0.6  1.44 0.040310784
-5     0.8  0.96 0.268435456
-6     1.0  0.00 0.000000000</code></pre>
-</div>
-</div>
-</div>
-</div>
+<section id="the-metropolis-hastings-algorithm" class="slide level2">
+<h2>The Metropolis-Hastings algorithm</h2>
+<p>Conditioned on data <span class="math inline">\(y\)</span>, let parameter <span class="math inline">\(\lambda\)</span> have posterior pdf <span class="math inline">\(f(\lambda | y) \propto f(\lambda) L(\lambda |y)\)</span>. A Metropolis-Hastings Markov chain for <span class="math inline">\(f(\lambda|y)\)</span>, <span class="math inline">\(\left\lbrace \lambda^{(1)}, \lambda^{(2)}, ..., \lambda^{(N)}\right\rbrace\)</span>, evolves as follows. Let <span class="math inline">\(\lambda^{(i)} = \lambda\)</span> be the location of the chain at iteration <span class="math inline">\(i \in \{1,2,...,N-1\}\)</span> and identify the next location <span class="math inline">\(\lambda^{(i+1)}\)</span> through a two-step process:</p>
 </section>
 <section id="section-2" class="slide level2">
 <h2></h2>
-<div class="{pull-right}">
-<div class="cell">
-<div class="cell-output-display">
-<p><img data-src="5a-grid-approximation_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
-</div>
-</div>
-</div>
-</section>
-<section id="step-3-approximate-the-posterior" class="slide level2">
-<h2>Step 3: Approximate the posterior</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>grid_data <span class="ot">&lt;-</span> grid_data <span class="sc">|&gt;</span> </span>
-<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">mutate</span>(<span class="at">unnormalized =</span> likelihood <span class="sc">*</span> prior) </span>
-<span id="cb10-3"><a href="#cb10-3"></a></span>
-<span id="cb10-4"><a href="#cb10-4"></a>grid_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  pi_grid prior  likelihood unnormalized
-1     0.0  0.00 0.000000000 0.000000e+00
-2     0.2  0.96 0.000004096 3.932160e-06
-3     0.4  1.44 0.001572864 2.264924e-03
-4     0.6  1.44 0.040310784 5.804753e-02
-5     0.8  0.96 0.268435456 2.576980e-01
-6     1.0  0.00 0.000000000 0.000000e+00</code></pre>
-</div>
-</div>
-</section>
-<section id="step-3-approximate-the-posterior-1" class="slide level2">
-<h2>Step 3: Approximate the posterior</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>grid_data <span class="ot">&lt;-</span> grid_data <span class="sc">|&gt;</span> </span>
-<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">mutate</span>(<span class="at">unnormalized =</span> likelihood <span class="sc">*</span> prior) <span class="sc">|&gt;</span> </span>
-<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">mutate</span>(<span class="at">posterior =</span> unnormalized <span class="sc">/</span> <span class="fu">sum</span>(unnormalized))</span>
-<span id="cb12-4"><a href="#cb12-4"></a></span>
-<span id="cb12-5"><a href="#cb12-5"></a>grid_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  pi_grid prior  likelihood unnormalized    posterior
-1     0.0  0.00 0.000000000 0.000000e+00 0.000000e+00
-2     0.2  0.96 0.000004096 3.932160e-06 1.236472e-05
-3     0.4  1.44 0.001572864 2.264924e-03 7.122080e-03
-4     0.6  1.44 0.040310784 5.804753e-02 1.825311e-01
-5     0.8  0.96 0.268435456 2.576980e-01 8.103344e-01
-6     1.0  0.00 0.000000000 0.000000e+00 0.000000e+00</code></pre>
-</div>
-</div>
-</section>
-<section id="step-3-approximate-the-posterior-2" class="slide level2">
-<h2>Step 3: Approximate the posterior</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>grid_data <span class="ot">&lt;-</span> grid_data <span class="sc">|&gt;</span> </span>
-<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">mutate</span>(<span class="at">unnormalized =</span> likelihood <span class="sc">*</span> prior) <span class="sc">|&gt;</span> </span>
-<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">mutate</span>(<span class="at">posterior =</span> unnormalized <span class="sc">/</span> <span class="fu">sum</span>(unnormalized))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Confirm that the posterior approximation sums to 1</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>grid_data <span class="sc">|&gt;</span> </span>
-<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">summarize</span>(<span class="fu">sum</span>(unnormalized), <span class="fu">sum</span>(posterior))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  sum(unnormalized) sum(posterior)
-1         0.3180144              1</code></pre>
-</div>
-</div>
-</section>
-<section id="the-grid-approximated-posterior" class="slide level2">
-<h2>The Grid Approximated Posterior</h2>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">ggplot</span>(grid_data, </span>
-<span id="cb17-2"><a href="#cb17-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> pi_grid, <span class="at">y =</span> posterior)) <span class="sc">+</span> </span>
-<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb17-4"><a href="#cb17-4"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> pi_grid, </span>
-<span id="cb17-5"><a href="#cb17-5"></a>                   <span class="at">xend =</span> pi_grid, </span>
-<span id="cb17-6"><a href="#cb17-6"></a>                   <span class="at">y =</span> <span class="dv">0</span>, </span>
-<span id="cb17-7"><a href="#cb17-7"></a>                   <span class="at">yend =</span> posterior))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<p><img data-src="5a-grid-approximation_files/figure-revealjs/unnamed-chunk-13-1.png" width="960"></p>
-</div>
-</div>
-</div>
-</section>
-<section id="step-4-sample-from-the-discretized-posterior" class="slide level2">
-<h2>Step 4: Sample from the Discretized Posterior</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">set.seed</span>(<span class="dv">84735</span>)</span>
-<span id="cb18-2"><a href="#cb18-2"></a>post_sample <span class="ot">&lt;-</span> <span class="fu">sample_n</span>(grid_data, <span class="at">size =</span> <span class="dv">10000</span>, </span>
-<span id="cb18-3"><a href="#cb18-3"></a>  <span class="at">weight =</span> posterior, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>post_sample <span class="sc">|&gt;</span> </span>
-<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">tabyl</span>(pi_grid) <span class="sc">|&gt;</span> </span>
-<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">adorn_totals</span>(<span class="st">"row"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> pi_grid     n percent
-     0.4    69  0.0069
-     0.6  1885  0.1885
-     0.8  8046  0.8046
-   Total 10000  1.0000</code></pre>
-</div>
-</div>
-</div>
-</section>
-<section id="grid-simulation-with-the-posterior-pdf" class="slide level2">
-<h2>Grid Simulation with the Posterior pdf</h2>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">ggplot</span>(post_sample, <span class="fu">aes</span>(<span class="at">x =</span> pi_grid)) <span class="sc">+</span> </span>
-<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span> </span>
-<span id="cb21-3"><a href="#cb21-3"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dbeta, <span class="at">args =</span> <span class="fu">list</span>(<span class="dv">11</span>, <span class="dv">3</span>)) <span class="sc">+</span> </span>
-<span id="cb21-4"><a href="#cb21-4"></a>  <span class="fu">lims</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<p><img data-src="5a-grid-approximation_files/figure-revealjs/unnamed-chunk-16-1.png" width="960"></p>
-</div>
-</div>
-</div>
+<p><strong>Step 1: Propose a new location.</strong><br>
+Conditioned on the current location <span class="math inline">\(\lambda\)</span>, draw a location <span class="math inline">\(\lambda'\)</span> from a proposal model with pdf <span class="math inline">\(q(\lambda'|\lambda)\)</span>.</p>
 </section>
 <section id="section-3" class="slide level2">
 <h2></h2>
-<p>Let’s increase the possible <span class="math inline">\(\pi\)</span> values from 6 to 101.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>pi_grid   <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">length =</span> <span class="dv">101</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="grid-simulation-with-posterior-pdf" class="slide level2">
-<h2>Grid simulation with posterior pdf</h2>
+<p><strong>Step 2: Decide whether or not to go there.</strong></p>
+<p>Calculate the <strong>acceptance probability</strong>, ie. the probability of accepting the proposal:</p>
+<p><span class="math display">\[\alpha = \min\left\lbrace 1, \; \frac{f(\lambda')L(\lambda'|y)}{f(\lambda)L(\lambda|y)} \frac{q(\lambda|\lambda')}{q(\lambda'|\lambda)} \right\rbrace\]</span></p>
 </section>
 <section id="section-4" class="slide level2">
 <h2></h2>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">ggplot</span>(post_sample, <span class="fu">aes</span>(<span class="at">x =</span> pi_grid)) <span class="sc">+</span> </span>
-<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), </span>
-<span id="cb23-3"><a href="#cb23-3"></a>                 <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span> </span>
-<span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dbeta, <span class="at">args =</span> <span class="fu">list</span>(<span class="dv">11</span>, <span class="dv">3</span>)) <span class="sc">+</span> </span>
-<span id="cb23-5"><a href="#cb23-5"></a>  <span class="fu">lims</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<p><img data-src="5a-grid-approximation_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
+<ul>
+<li class="fragment"><p>Flip a weighted coin. If it’s Heads, with probability <span class="math inline">\(\alpha\)</span>, go to the proposed location. If it’s Tails, with probability <span class="math inline">\(1 - \alpha\)</span>, stay:</p>
+<p><span class="math display">\[\lambda^{(i+1)} =
+     \begin{cases}
+     \lambda' &amp;  \text{ with probability } \alpha \\
+     \lambda &amp;  \text{ with probability } 1- \alpha \\
+     \end{cases}\]</span></p></li>
+</ul>
+</section>
+<section id="section-5" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>current <span class="ot">&lt;-</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">set.seed</span>(<span class="dv">4</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a>proposal <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="at">mean =</span> current, <span class="at">sd =</span> <span class="fl">0.3</span>)</span>
+<span id="cb4-3"><a href="#cb4-3"></a>proposal</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.065026</code></pre>
 </div>
 </div>
 </section>
-<section id="grid-approximation-1" class="slide level2">
-<h2>Grid approximation</h2>
-
-<img data-src="5a-grid-approximation_files/figure-revealjs/unnamed-chunk-21-1.png" alt="Three images of a rainbow. The first image shows only a few &quot;slices&quot; of the rainbow, the second image shows even more slices for a fuller image of the rainbow, and the third shows the complete rainbow." width="960" class="r-stretch"></section>
-<section id="grid-approximation-2" class="slide level2">
-<h2>Grid approximation</h2>
-<p>Grid approximation produces a sample of <span class="math inline">\(N\)</span> <strong>independent</strong> <span class="math inline">\(\theta\)</span> values, <span class="math inline">\(\left\lbrace \theta^{(1)}, \theta^{(2)}, \ldots, \theta^{(N)} \right\rbrace\)</span>, from a <strong>discretized approximation</strong> of posterior pdf <span class="math inline">\(f(\theta|y)\)</span>. This algorithm evolves in four steps:</p>
-<ol type="1">
-<li class="fragment">Define a discrete grid of possible <span class="math inline">\(\theta\)</span> values.</li>
-<li class="fragment">Evaluate the prior pdf <span class="math inline">\(f(\theta)\)</span> and likelihood function <span class="math inline">\(L(\theta|y)\)</span> at each <span class="math inline">\(\theta\)</span> grid value.</li>
-<li class="fragment">Obtain a discrete approximation of posterior pdf <span class="math inline">\(f(\theta |y)\)</span> by: (a) calculating the product <span class="math inline">\(f(\theta)L(\theta|y)\)</span> at each <span class="math inline">\(\theta\)</span> grid value; and then (b) <em>normalizing</em> the products so that they sum to 1 across all <span class="math inline">\(\theta\)</span>.</li>
-<li class="fragment">Randomly sample <span class="math inline">\(N\)</span> <span class="math inline">\(\theta\)</span> grid values with respect to their corresponding normalized posterior probabilities.</li>
-</ol>
-
-<img src="https://www.stats115.com/img/logo.png" class="slide-logo r-stretch"><div class="footer footer-default">
+<section id="should-i-stay-or-should-i-go" class="slide level2">
+<h2>Should I stay or should I go?</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>proposal_plaus <span class="ot">&lt;-</span> <span class="fu">dgamma</span>(proposal,<span class="dv">1</span>,<span class="dv">1</span>) <span class="sc">*</span> <span class="fu">dpois</span>(<span class="dv">0</span>,proposal)</span>
+<span id="cb6-2"><a href="#cb6-2"></a>proposal_plaus</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.118831</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>current_plaus  <span class="ot">&lt;-</span> <span class="fu">dgamma</span>(current,<span class="dv">1</span>,<span class="dv">1</span>) <span class="sc">*</span> <span class="fu">dpois</span>(<span class="dv">0</span>,current)</span>
+<span id="cb8-2"><a href="#cb8-2"></a>current_plaus </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1353353</code></pre>
+</div>
+</div>
+</section>
+<section id="should-i-stay-or-should-i-go-1" class="slide level2">
+<h2>Should I stay or should I go?</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>alpha <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="dv">1</span>, proposal_plaus <span class="sc">/</span> current_plaus)</span>
+<span id="cb10-2"><a href="#cb10-2"></a>alpha</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.878049</code></pre>
+</div>
+</div>
+<p>Though not certain, the probability <span class="math inline">\(\alpha\)</span> of accepting and subsequently moving to the proposed location is relatively high</p>
+</section>
+<section id="should-i-stay-or-should-i-go-2" class="slide level2">
+<h2>Should I stay or should I go?</h2>
+<p>To make the final determination, we flip a weighted coin which accepts the proposal with probability <span class="math inline">\(\alpha\)</span> (0.878) and rejects the proposal with probability <span class="math inline">\(1 - \alpha\)</span> (0.122).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>next_stop <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(proposal, current), <span class="at">size =</span> <span class="dv">1</span>, </span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="at">prob =</span> <span class="fu">c</span>(alpha, <span class="dv">1</span><span class="sc">-</span>alpha))</span>
+<span id="cb12-3"><a href="#cb12-3"></a>next_stop</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.065026</code></pre>
+</div>
+</div>
+</section>
+<section id="section-6" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>one_mh_iteration <span class="ot">&lt;-</span> <span class="cf">function</span>(sigma, current){</span>
+<span id="cb14-2"><a href="#cb14-2"></a> <span class="co"># STEP 1: Propose the next chain location</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a> proposal <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="at">mean =</span> current, <span class="at">sd =</span> sigma)</span>
+<span id="cb14-4"><a href="#cb14-4"></a>  </span>
+<span id="cb14-5"><a href="#cb14-5"></a> <span class="co"># STEP 2: Decide whether or not to go there</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a> <span class="cf">if</span>(proposal <span class="sc">&lt;</span> <span class="dv">0</span>) {alpha <span class="ot">&lt;-</span> <span class="dv">0</span>}</span>
+<span id="cb14-7"><a href="#cb14-7"></a> <span class="cf">else</span> {</span>
+<span id="cb14-8"><a href="#cb14-8"></a>  proposal_plaus <span class="ot">&lt;-</span> <span class="fu">dgamma</span>(proposal, <span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">dpois</span>(<span class="dv">0</span>, proposal)</span>
+<span id="cb14-9"><a href="#cb14-9"></a>  current_plaus  <span class="ot">&lt;-</span> <span class="fu">dgamma</span>(current, <span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">dpois</span>(<span class="dv">0</span>, current)</span>
+<span id="cb14-10"><a href="#cb14-10"></a>  alpha <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="dv">1</span>, proposal_plaus <span class="sc">/</span> current_plaus)</span>
+<span id="cb14-11"><a href="#cb14-11"></a> }</span>
+<span id="cb14-12"><a href="#cb14-12"></a> next_stop <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(proposal, current), </span>
+<span id="cb14-13"><a href="#cb14-13"></a>  <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fu">c</span>(alpha, <span class="dv">1</span><span class="sc">-</span>alpha))</span>
+<span id="cb14-14"><a href="#cb14-14"></a>  </span>
+<span id="cb14-15"><a href="#cb14-15"></a> <span class="co"># Return the results</span></span>
+<span id="cb14-16"><a href="#cb14-16"></a> <span class="fu">return</span>(<span class="fu">data.frame</span>(proposal, alpha, next_stop))</span>
+<span id="cb14-17"><a href="#cb14-17"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section-7" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>mh_tour <span class="ot">&lt;-</span> <span class="cf">function</span>(N, sigma){</span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="co"># 1. Start the chain at location 1</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a>  current <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a></span>
+<span id="cb15-5"><a href="#cb15-5"></a>  <span class="co"># 2. Initialize the simulation</span></span>
+<span id="cb15-6"><a href="#cb15-6"></a>  lambda <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, N)</span>
+<span id="cb15-7"><a href="#cb15-7"></a></span>
+<span id="cb15-8"><a href="#cb15-8"></a>  <span class="co"># 3. Simulate N Markov chain stops</span></span>
+<span id="cb15-9"><a href="#cb15-9"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N){    </span>
+<span id="cb15-10"><a href="#cb15-10"></a>    <span class="co"># Simulate one iteration</span></span>
+<span id="cb15-11"><a href="#cb15-11"></a>    sim <span class="ot">&lt;-</span> <span class="fu">one_mh_iteration</span>(<span class="at">sigma =</span> sigma, <span class="at">current =</span> current)</span>
+<span id="cb15-12"><a href="#cb15-12"></a>    </span>
+<span id="cb15-13"><a href="#cb15-13"></a>    <span class="co"># Record next location</span></span>
+<span id="cb15-14"><a href="#cb15-14"></a>    lambda[i] <span class="ot">&lt;-</span> sim<span class="sc">$</span>next_stop</span>
+<span id="cb15-15"><a href="#cb15-15"></a>    </span>
+<span id="cb15-16"><a href="#cb15-16"></a>    <span class="co"># Reset the current location</span></span>
+<span id="cb15-17"><a href="#cb15-17"></a>    current <span class="ot">&lt;-</span> sim<span class="sc">$</span>next_stop</span>
+<span id="cb15-18"><a href="#cb15-18"></a>  }</span>
+<span id="cb15-19"><a href="#cb15-19"></a>  </span>
+<span id="cb15-20"><a href="#cb15-20"></a>  <span class="co"># 4. Return the chain locations</span></span>
+<span id="cb15-21"><a href="#cb15-21"></a>  <span class="fu">return</span>(<span class="fu">data.frame</span>(<span class="at">iteration =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>N), lambda))</span>
+<span id="cb15-22"><a href="#cb15-22"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section-8" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">set.seed</span>(<span class="dv">4</span>)</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">one_mh_iteration</span>(<span class="at">sigma =</span> <span class="fl">0.3</span>, <span class="at">current =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  proposal    alpha next_stop
+1 1.065026 0.878049  1.065026</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">one_mh_iteration</span>(<span class="at">sigma =</span> <span class="fl">0.3</span>, <span class="at">current =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  proposal     alpha next_stop
+1 1.686174 0.2535109         1</code></pre>
+</div>
+</div>
+<div class="cell" data-hash="5b-metropolis-hastings_cache/revealjs/unnamed-chunk-12_999e98e4dadcdbe4e9624d0b2215010d">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">set.seed</span>(<span class="dv">84735</span>)</span>
+<span id="cb20-2"><a href="#cb20-2"></a>mh_simulation_1 <span class="ot">&lt;-</span> <span class="fu">mh_tour</span>(<span class="at">N =</span> <span class="dv">5000</span>, <span class="at">sigma =</span> <span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section-9" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">ggplot</span>(mh_simulation_1, <span class="fu">aes</span>(<span class="at">x =</span> iteration, <span class="at">y =</span> lambda)) <span class="sc">+</span> </span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">geom_line</span>()</span>
+<span id="cb21-3"><a href="#cb21-3"></a></span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="fu">ggplot</span>(mh_simulation_1, <span class="fu">aes</span>(<span class="at">x =</span> lambda)) <span class="sc">+</span> </span>
+<span id="cb21-5"><a href="#cb21-5"></a>  <span class="fu">geom_histogram</span>(<span class="at">color =</span> <span class="st">"white"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="5b-metropolis-hastings_files/figure-revealjs/unnamed-chunk-14-1.png" width="960"></p>
+</div>
+</div>
+<p><img src="https://www.stats115.com/img/logo.png" class="slide-logo"></p>
+<div class="footer footer-default">
 <p><a href="https://stats115.com">stats115.com</a></p>
 </div>
-</section></section>
+</section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="5a-grid-approximation_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="5b-metropolis-hastings_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="5a-grid-approximation_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="5a-grid-approximation_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="5a-grid-approximation_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="5a-grid-approximation_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="5a-grid-approximation_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="5b-metropolis-hastings_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="5b-metropolis-hastings_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="5b-metropolis-hastings_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="5b-metropolis-hastings_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="5b-metropolis-hastings_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="5a-grid-approximation_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="5a-grid-approximation_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="5a-grid-approximation_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="5a-grid-approximation_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="5b-metropolis-hastings_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="5b-metropolis-hastings_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="5b-metropolis-hastings_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="5b-metropolis-hastings_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
