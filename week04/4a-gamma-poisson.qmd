@@ -97,7 +97,7 @@ $\int_0^1 f(\pi) \stackrel{?}{=} 1$
 
 . . .
 
-$\int_0^1 e-e^\pi\ d\pi=(e\pi - e^\pi)|_0^1 = [e-0] -[e-1]= 1$
+$\int_0^1 e-e^\pi\ d\pi=(e\pi - e^\pi)|_0^1 = [e-e] -[0-e^0]= 1$
 
 . . .
 
@@ -372,3 +372,8 @@ Upon observing data $\vec{y} = (y_1,y_2,\ldots,y_n)$, the posterior model of $\l
 plot_gamma_poisson(shape = 10, rate = 2, sum_y = 11, n = 4)
 ```
 
+## The Gamma-Poisson model
+
+```{r}
+summarize_gamma_poisson(shape = 10, rate = 2, sum_y = 11, n = 4)
+```

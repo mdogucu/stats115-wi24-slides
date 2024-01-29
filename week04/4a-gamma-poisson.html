@@ -444,7 +444,7 @@ Dr.&nbsp;Mine Dogucu
 <p><span class="math inline">\(\int_0^1 f(\pi) \stackrel{?}{=} 1\)</span></p>
 </div>
 <div class="fragment">
-<p><span class="math inline">\(\int_0^1 e-e^\pi\ d\pi=(e\pi - e^\pi)|_0^1 = [e-0] -[e-1]= 1\)</span></p>
+<p><span class="math inline">\(\int_0^1 e-e^\pi\ d\pi=(e\pi - e^\pi)|_0^1 = [e-e] -[0-e^0]= 1\)</span></p>
 </div>
 <div class="fragment">
 <p><span class="math inline">\(\int_0^1 f(\pi) = 1\)</span> <svg aria-hidden="true" role="img" viewbox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"></path></svg></p>
@@ -626,12 +626,21 @@ Y_i | \lambda &amp; \stackrel{ind}{\sim} \text{Pois}(\lambda) \\
 <h2>The Gamma-Poisson model</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">plot_gamma_poisson</span>(<span class="at">shape =</span> <span class="dv">10</span>, <span class="at">rate =</span> <span class="dv">2</span>, <span class="at">sum_y =</span> <span class="dv">11</span>, <span class="at">n =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img data-src="4a-gamma-poisson_files/figure-revealjs/unnamed-chunk-9-1.png" width="960"></p>
+
+</div>
+<img data-src="4a-gamma-poisson_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section>
+<section id="the-gamma-poisson-model-2" class="slide level2">
+<h2>The Gamma-Poisson model</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">summarize_gamma_poisson</span>(<span class="at">shape =</span> <span class="dv">10</span>, <span class="at">rate =</span> <span class="dv">2</span>, <span class="at">sum_y =</span> <span class="dv">11</span>, <span class="at">n =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      model shape rate mean     mode       var        sd
+1     prior    10    2  5.0 4.500000 2.5000000 1.5811388
+2 posterior    21    6  3.5 3.333333 0.5833333 0.7637626</code></pre>
 </div>
 </div>
-<p><img src="https://www.stats115.com/img/logo.png" class="slide-logo"></p>
-<div class="footer footer-default">
+
+<img src="https://www.stats115.com/img/logo.png" class="slide-logo r-stretch"><div class="footer footer-default">
 <p><a href="https://stats115.com">stats115.com</a></p>
 </div>
 </section>
