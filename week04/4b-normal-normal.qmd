@@ -218,7 +218,7 @@ $$\mu | \vec{y} \; \sim \; N\bigg(5.78, 0.009^2 \bigg)$$
 
 ```{r fig.width=9}
 plot_normal_normal(mean = 6.5, sd = 0.4, sigma = 0.5, 
-  y_bar = 5.734, n = 25)
+  y_bar = 5.735, n = 25)
 ```
 
 ##
