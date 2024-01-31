@@ -173,26 +173,51 @@ Y_i | \mu & \stackrel{ind}{\sim} N(\mu, \sigma^2) \\
 \mu & \sim N(\theta, \tau^2) \\
 \end{split}$$
 
+##
+
 Upon observing data $\vec{y} = (y_1,y_2,\ldots,y_n)$, the posterior model of $\mu$ is also a Normal with updated parameters:
 
 \begin{equation}
 \mu|\vec{y} \; \sim \;  N\bigg(\frac{\theta\sigma^2/n + \bar{y}\tau^2}{\tau^2+\sigma^2/n}, \; \frac{\tau^2\sigma^2/n}{\tau^2+\sigma^2/n}\bigg) \; .
 \end{equation}
 
+## Data
+
+```{r}
+# Load the data
+data(football)
+concussion_subjects <- football %>%
+  filter(group == "fb_concuss")
+```
+
+```{r}
+concussion_subjects %>%
+  summarize(mean(volume))
+```
+
 ##
+
+
+- our Normal prior model of $\mu$ had mean $\theta = 6.5$ and standard deviation $\tau = 0.4$;
+- our $n = 25$ sample subjects had a sample mean volume $\bar{y}=5.735$;
+- we will assume a known standard deviation among individual hippocampal volumes of $\sigma = 0.5$.
+
+## 
 
 The posterior model of $\mu$ is:
 
-$$\mu | \vec{y} \; \sim \; N\bigg(\frac{6.5*0.593^2/25 + 5.734*0.4^2}{0.4^2+0.593^2/25}, \; \frac{0.4^2*0.593^2/25}{0.4^2+0.593^2/25}\bigg)\;,$$
+$$\mu | \vec{y} \; \sim \; N\bigg(6.5\cdot\frac{0.5^2}{25\cdot0.4^2+0.5^2} + 5.735\cdot\frac{25\cdot 0.4^2}{25 \cdot 0.4^2+0.5^2}, \;$$ 
+$$\frac{0.4^2\cdot0.5^2}{25\cdot0.4^2+0.5^2}\bigg).$$
+
 
 or, further simplified,
 
-$$\mu | \vec{y} \; \sim \; N\bigg(5.775, 0.115^2 \bigg) \; .$$
+$$\mu | \vec{y} \; \sim \; N\bigg(5.78, 0.009^2 \bigg)$$
 
 ##
 
 ```{r fig.width=9}
-plot_normal_normal(mean = 6.5, sd = 0.4, sigma = 0.593, 
+plot_normal_normal(mean = 6.5, sd = 0.4, sigma = 0.5, 
   y_bar = 5.734, n = 25)
 ```
 
@@ -200,7 +225,7 @@ plot_normal_normal(mean = 6.5, sd = 0.4, sigma = 0.593,
 
 ```{r}
 
-summarize_normal_normal(mean = 6.5, sd = 0.4, sigma = 0.593, 
+summarize_normal_normal(mean = 6.5, sd = 0.4, sigma = 0.5, 
   y_bar = 5.735, n = 25)
 ```
 
