@@ -333,6 +333,9 @@ Grid approximation produces a sample of $N$ __independent__ $\theta$ values, $\l
 
 1. Define a discrete grid of possible $\theta$ values.
 2. Evaluate the prior pdf $f(\theta)$ and likelihood function $L(\theta|y)$ at each $\theta$ grid value.
+
+##
+
 3. Obtain a discrete approximation of posterior pdf $f(\theta |y)$ by: (a) calculating the product $f(\theta)L(\theta|y)$ at each $\theta$ grid value; and then (b) *normalizing* the products so that they sum to 1 across all $\theta$.
 4. Randomly sample $N$ $\theta$ grid values with respect to their corresponding normalized posterior probabilities.
 

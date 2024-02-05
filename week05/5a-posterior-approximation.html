@@ -644,6 +644,11 @@ Dr.&nbsp;Mine Dogucu
 <ol type="1">
 <li class="fragment">Define a discrete grid of possible <span class="math inline">\(\theta\)</span> values.</li>
 <li class="fragment">Evaluate the prior pdf <span class="math inline">\(f(\theta)\)</span> and likelihood function <span class="math inline">\(L(\theta|y)\)</span> at each <span class="math inline">\(\theta\)</span> grid value.</li>
+</ol>
+</section>
+<section id="section-5" class="slide level2">
+<h2></h2>
+<ol start="3" type="1">
 <li class="fragment">Obtain a discrete approximation of posterior pdf <span class="math inline">\(f(\theta |y)\)</span> by: (a) calculating the product <span class="math inline">\(f(\theta)L(\theta|y)\)</span> at each <span class="math inline">\(\theta\)</span> grid value; and then (b) <em>normalizing</em> the products so that they sum to 1 across all <span class="math inline">\(\theta\)</span>.</li>
 <li class="fragment">Randomly sample <span class="math inline">\(N\)</span> <span class="math inline">\(\theta\)</span> grid values with respect to their corresponding normalized posterior probabilities.</li>
 </ol>
@@ -659,7 +664,7 @@ Dr.&nbsp;Mine Dogucu
 <section id="markov-chains-via-rstan" class="slide level2">
 <h2>Markov chains via rstan</h2>
 </section>
-<section id="section-5" class="slide level2">
+<section id="section-6" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">library</span>(rstan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -794,7 +799,7 @@ Chain 4: </code></pre>
 </div>
 </div>
 </section>
-<section id="section-6" class="slide level2">
+<section id="section-7" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">as.array</span>(bb_sim, <span class="at">pars =</span> <span class="st">"pi"</span>) <span class="sc">%&gt;%</span> </span>
@@ -811,7 +816,7 @@ iterations   chain:1   chain:2   chain:3   chain:4
 </div>
 </div>
 </section>
-<section id="section-7" class="slide level2">
+<section id="section-8" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">as.array</span>(bb_sim, <span class="at">pars =</span> <span class="st">"pi"</span>) <span class="sc">%&gt;%</span> </span>
@@ -828,7 +833,7 @@ iterations   chain:1   chain:2   chain:3   chain:4
 </div>
 </div>
 </section>
-<section id="section-8" class="slide level2">
+<section id="section-9" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">as.array</span>(bb_sim, <span class="at">pars =</span> <span class="st">"pi"</span>) <span class="sc">%&gt;%</span> </span>
@@ -5839,11 +5844,11 @@ iterations   chain:1   chain:2   chain:3   chain:4
 </div>
 </div>
 </section>
-<section id="section-9" class="slide level2">
+<section id="section-10" class="slide level2">
 <h2></h2>
 
 <img data-src="5a-posterior-approximation_files/figure-revealjs/unnamed-chunk-28-1.png" width="960" class="r-stretch"></section>
-<section id="section-10" class="slide level2">
+<section id="section-11" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>bayesplot<span class="sc">::</span><span class="fu">mcmc_trace</span>(bb_sim, <span class="at">pars =</span> <span class="st">"pi"</span>, <span class="at">size =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
