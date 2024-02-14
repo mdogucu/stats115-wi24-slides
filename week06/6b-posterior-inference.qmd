@@ -52,9 +52,9 @@ $$\pi  \sim \text{Beta}(4, 6)$$
 ##
 
 ```{r}
-moma_sample %>% 
-  mutate(genx = (birth >= 1965)) %>% 
-  tabyl(genx)
+moma_sample |> 
+  group_by(genx) |> 
+  tally()
 ```
 
 ##
@@ -324,7 +324,9 @@ qbeta(c(0.025, 0.975), 18, 92)
 
 
 
-```{r cache=TRUE, message=FALSE}
+```{r}
+#| cache: true
+#| message: false
 library(rstan)
 # STEP 1: DEFINE the model
 art_model <- "
@@ -410,7 +412,7 @@ mcmc_areas(art_sim, pars = "pi",
 art_chains_df <- as.data.frame(art_sim, 
   pars ="lp__", include = FALSE)
 
-art_chains_df %>% 
+art_chains_df |> 
   summarize(post_mean = mean(pi), 
     post_mode = sample_mode(pi),
     lower_95 = quantile(pi, 0.025),
@@ -423,8 +425,8 @@ art_chains_df %>%
 
 
 ```{r}
-art_chains_df %>% 
-  mutate(exceeds = pi < 0.20) %>% 
+art_chains_df |> 
+  mutate(exceeds = pi < 0.20) |> 
   tabyl(exceeds)
 ```
 
@@ -586,7 +588,7 @@ head(art_chains_df, 3)
 ```{r}
 set.seed(84735)
 # Predict a value of Y' for each pi value in the chain
-art_chains_df <- art_chains_df %>% 
+art_chains_df <- art_chains_df |> 
   mutate(y_predict = rbinom(length(pi), size = 20, prob = pi))
 ```
 

@@ -435,12 +435,15 @@ $ year_acquired_max &lt;fct&gt; 1981, 2005, 2016, 2001, 2012, 2008, 2018, 1981, 
 <section id="section-3" class="slide level2">
 <h2></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>moma_sample <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">mutate</span>(<span class="at">genx =</span> (birth <span class="sc">&gt;=</span> <span class="dv">1965</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-3"><a href="#cb3-3"></a>  <span class="fu">tabyl</span>(genx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>moma_sample <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">group_by</span>(genx) <span class="sc">|&gt;</span> </span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> genx   n percent valid_percent
-   NA 100       1            NA</code></pre>
+<pre><code># A tibble: 2 × 2
+  genx      n
+  &lt;lgl&gt; &lt;int&gt;
+1 FALSE    86
+2 TRUE     14</code></pre>
 </div>
 </div>
 </section>
@@ -598,7 +601,7 @@ H_a: &amp; \; \; \pi \ne 0.3 \\
 </section>
 <section id="section-19" class="slide level2">
 <h2></h2>
-<div class="cell" data-hash="6b-posterior-inference_cache/revealjs/unnamed-chunk-14_dde115dd391472a8a80c35d3ef2248dd">
+<div class="cell" data-hash="6b-posterior-inference_cache/revealjs/unnamed-chunk-14_b69a1cbf210253a11bbef22b3178885a">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">library</span>(rstan)</span>
 <span id="cb20-2"><a href="#cb20-2"></a><span class="co"># STEP 1: DEFINE the model</span></span>
 <span id="cb20-3"><a href="#cb20-3"></a>art_model <span class="ot">&lt;-</span> <span class="st">"</span></span>
@@ -620,8 +623,8 @@ H_a: &amp; \; \; \pi \ne 0.3 \\
 <pre><code>
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 3e-06 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.03 seconds.
+Chain 1: Gradient evaluation took 1.1e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -638,15 +641,15 @@ Chain 1: Iteration: 8000 / 10000 [ 80%]  (Sampling)
 Chain 1: Iteration: 9000 / 10000 [ 90%]  (Sampling)
 Chain 1: Iteration: 10000 / 10000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.014 seconds (Warm-up)
-Chain 1:                0.014 seconds (Sampling)
-Chain 1:                0.028 seconds (Total)
+Chain 1:  Elapsed Time: 0.027 seconds (Warm-up)
+Chain 1:                0.027 seconds (Sampling)
+Chain 1:                0.054 seconds (Total)
 Chain 1: 
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
 Chain 2: 
-Chain 2: Gradient evaluation took 0 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 2: Gradient evaluation took 1e-06 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.01 seconds.
 Chain 2: Adjust your expectations accordingly!
 Chain 2: 
 Chain 2: 
@@ -663,15 +666,15 @@ Chain 2: Iteration: 8000 / 10000 [ 80%]  (Sampling)
 Chain 2: Iteration: 9000 / 10000 [ 90%]  (Sampling)
 Chain 2: Iteration: 10000 / 10000 [100%]  (Sampling)
 Chain 2: 
-Chain 2:  Elapsed Time: 0.014 seconds (Warm-up)
-Chain 2:                0.016 seconds (Sampling)
-Chain 2:                0.03 seconds (Total)
+Chain 2:  Elapsed Time: 0.027 seconds (Warm-up)
+Chain 2:                0.029 seconds (Sampling)
+Chain 2:                0.056 seconds (Total)
 Chain 2: 
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
 Chain 3: 
-Chain 3: Gradient evaluation took 0 seconds
-Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 3: Gradient evaluation took 1e-06 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.01 seconds.
 Chain 3: Adjust your expectations accordingly!
 Chain 3: 
 Chain 3: 
@@ -688,15 +691,15 @@ Chain 3: Iteration: 8000 / 10000 [ 80%]  (Sampling)
 Chain 3: Iteration: 9000 / 10000 [ 90%]  (Sampling)
 Chain 3: Iteration: 10000 / 10000 [100%]  (Sampling)
 Chain 3: 
-Chain 3:  Elapsed Time: 0.014 seconds (Warm-up)
-Chain 3:                0.015 seconds (Sampling)
-Chain 3:                0.029 seconds (Total)
+Chain 3:  Elapsed Time: 0.026 seconds (Warm-up)
+Chain 3:                0.027 seconds (Sampling)
+Chain 3:                0.053 seconds (Total)
 Chain 3: 
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
 Chain 4: 
-Chain 4: Gradient evaluation took 0 seconds
-Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 4: Gradient evaluation took 1e-06 seconds
+Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.01 seconds.
 Chain 4: Adjust your expectations accordingly!
 Chain 4: 
 Chain 4: 
@@ -713,9 +716,9 @@ Chain 4: Iteration: 8000 / 10000 [ 80%]  (Sampling)
 Chain 4: Iteration: 9000 / 10000 [ 90%]  (Sampling)
 Chain 4: Iteration: 10000 / 10000 [100%]  (Sampling)
 Chain 4: 
-Chain 4:  Elapsed Time: 0.014 seconds (Warm-up)
-Chain 4:                0.014 seconds (Sampling)
-Chain 4:                0.028 seconds (Total)
+Chain 4:  Elapsed Time: 0.027 seconds (Warm-up)
+Chain 4:                0.028 seconds (Sampling)
+Chain 4:                0.055 seconds (Total)
 Chain 4: </code></pre>
 </div>
 </div>
@@ -773,27 +776,27 @@ Chain 4: </code></pre>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>art_chains_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(art_sim, </span>
 <span id="cb28-2"><a href="#cb28-2"></a>  <span class="at">pars =</span><span class="st">"lp__"</span>, <span class="at">include =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb28-3"><a href="#cb28-3"></a></span>
-<span id="cb28-4"><a href="#cb28-4"></a>art_chains_df <span class="sc">%&gt;%</span> </span>
+<span id="cb28-4"><a href="#cb28-4"></a>art_chains_df <span class="sc">|&gt;</span> </span>
 <span id="cb28-5"><a href="#cb28-5"></a>  <span class="fu">summarize</span>(<span class="at">post_mean =</span> <span class="fu">mean</span>(pi), </span>
 <span id="cb28-6"><a href="#cb28-6"></a>    <span class="at">post_mode =</span> <span class="fu">sample_mode</span>(pi),</span>
 <span id="cb28-7"><a href="#cb28-7"></a>    <span class="at">lower_95 =</span> <span class="fu">quantile</span>(pi, <span class="fl">0.025</span>),</span>
 <span id="cb28-8"><a href="#cb28-8"></a>    <span class="at">upper_95 =</span> <span class="fu">quantile</span>(pi, <span class="fl">0.975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  post_mean post_mode  lower_95  upper_95
-1 0.1635453 0.1583033 0.1000882 0.2391218</code></pre>
+1 0.1636757 0.1577523 0.1007598 0.2384584</code></pre>
 </div>
 </div>
 </section>
 <section id="section-27" class="slide level2">
 <h2></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>art_chains_df <span class="sc">%&gt;%</span> </span>
-<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">mutate</span>(<span class="at">exceeds =</span> pi <span class="sc">&lt;</span> <span class="fl">0.20</span>) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>art_chains_df <span class="sc">|&gt;</span> </span>
+<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">mutate</span>(<span class="at">exceeds =</span> pi <span class="sc">&lt;</span> <span class="fl">0.20</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb30-3"><a href="#cb30-3"></a>  <span class="fu">tabyl</span>(exceeds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> exceeds     n percent
-   FALSE  3061 0.15305
-    TRUE 16939 0.84695</code></pre>
+   FALSE  2987 0.14935
+    TRUE 17013 0.85065</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -871,7 +874,7 @@ Chain 4: </code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">set.seed</span>(<span class="dv">84735</span>)</span>
 <span id="cb36-2"><a href="#cb36-2"></a><span class="co"># Predict a value of Y' for each pi value in the chain</span></span>
-<span id="cb36-3"><a href="#cb36-3"></a>art_chains_df <span class="ot">&lt;-</span> art_chains_df <span class="sc">%&gt;%</span> </span>
+<span id="cb36-3"><a href="#cb36-3"></a>art_chains_df <span class="ot">&lt;-</span> art_chains_df <span class="sc">|&gt;</span> </span>
 <span id="cb36-4"><a href="#cb36-4"></a>  <span class="fu">mutate</span>(<span class="at">y_predict =</span> <span class="fu">rbinom</span>(<span class="fu">length</span>(pi), <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> pi))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
