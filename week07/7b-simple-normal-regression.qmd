@@ -55,7 +55,7 @@ ggplot(data.frame(x = c(-4,4)), aes(x=x)) +
 
 :::
 
-:::{.pull-right}[
+:::{.pull-right}
 
 $Y_i | \mu, \sigma  \stackrel{ind}{\sim} N(\mu, \sigma^2)$  
 $\mu \sim N(\theta, \tau^2)$
@@ -356,7 +356,7 @@ pred <- round(b0_median,2) + (round(b1_median,2)*75)
 Your natural first crack at this question might be to plug the 75-degree temperature into the posterior median model.
 Thus, we expect that there will be `r round(pred)` riders tomorrow:
 
-$$`r round(b0_median,2)` + `r round(b1_median,2)`*75 = `r pred`$$
+$$`r round(b0_median,2)` + `r round(b1_median,2)`\times75 = `r pred`$$
 
 . . .
 
@@ -539,9 +539,6 @@ posterior_interval(shortcut_prediction, prob = 0.95)
 mcmc_dens(shortcut_prediction) + 
   xlab("predicted ridership on a 75 degree day")
 ```
-
-##
-
 
 
 ## Using the default priors in `rstanarm`

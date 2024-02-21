@@ -437,10 +437,10 @@ $ rides       &lt;int&gt; 654, 1229, 1454, 1518, 1362, 891, 1280, 1220, 1137, 13
 </div>
 </div>
 </div>
-<p>:::{.pull-right}[</p>
+<div class="pull-right">
 <p><span class="math inline">\(Y_i | \mu, \sigma \stackrel{ind}{\sim} N(\mu, \sigma^2)\)</span><br>
 <span class="math inline">\(\mu \sim N(\theta, \tau^2)\)</span> <span class="math inline">\(\sigma \sim \text{ some prior model.}\)</span></p>
-<p>:::</p>
+</div>
 </section>
 <section id="regression-model" class="slide level2">
 <h2>Regression Model</h2>
@@ -661,7 +661,7 @@ Y_i | \beta_0, \beta_1, \sigma &amp; \stackrel{ind}{\sim} N\left(\mu_i, \sigma^2
 <section id="section-17" class="slide level2">
 <h2></h2>
 <p>Your natural first crack at this question might be to plug the 75-degree temperature into the posterior median model. Thus, we expect that there will be 3968 riders tomorrow:</p>
-<p><span class="math display">\[-2194.44 + 82.16*75 = 3967.56\]</span></p>
+<p><span class="math display">\[-2194.44 + 82.16\times75 = 3967.56\]</span></p>
 <div class="fragment">
 <p>Not quiet.</p>
 </div>
@@ -833,9 +833,6 @@ Y_{\text{new}}^{(20000)} \\
 
 </div>
 <img data-src="7b-simple-normal-regression_files/figure-revealjs/unnamed-chunk-31-1.png" width="960" class="r-stretch"></section>
-<section id="section-32" class="slide level2">
-<h2></h2>
-</section>
 <section id="using-the-default-priors-in-rstanarm" class="slide level2">
 <h2>Using the default priors in <code>rstanarm</code></h2>
 <div class="cell">
@@ -849,7 +846,7 @@ Y_{\text{new}}^{(20000)} \\
 </div>
 <p>By setting <code>autoscale = TRUE</code>, <code>stan_glm()</code> adjusts or scales our default priors to optimize the study of parameters which have different scales.</p>
 </section>
-<section id="section-33" class="slide level2">
+<section id="section-32" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">prior_summary</span>(bike_model_default)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -878,7 +875,7 @@ See help('prior_summary.stanreg') for more details</code></pre>
 </div>
 </div>
 </section>
-<section id="section-34" class="slide level2">
+<section id="section-33" class="slide level2">
 <h2></h2>
 </section>
 <section id="default-vs-non-default-priors" class="slide level2">
