@@ -159,13 +159,13 @@ The first layer of the simple Normal hierarchical model assumes that each runner
 
 $$Y_{ij} | \mu_{j}, \sigma_y \sim N(\mu_{j}, \sigma_y^2)$$
 
-. . .
+##
 
 To incorporate information about age into our understanding of running times within runners, we can replace the $\mu_{j}$ with runner-specific means $\mu_{ij}$, which depend upon the runner's age in their $i$th race, $X_{ij}$.
 
 $$\mu_{ij} = \beta_{0j} + \beta_1 X_{ij}$$
 
-. . .
+##
 
 Thus, the first layer of our hierarchical model describes the relationship between net times and age __within__ each runner $j$ by:
 
@@ -188,8 +188,7 @@ The other parameters are __global__, or shared across all runners $j$
 - $\beta_1$ = global age coefficient, i.e., the typical change in a runner's net time per one year increase in age; and
 - $\sigma_y$ = __within-group variability__ around the mean regression model $\beta_{0j} + \beta_1 X_{ij}$, and hence a measure of the _strength_ of the relationship between an individual runner's time and their age.
 
-. . .
-
+##
 
 The first layer of our hierarchical model  assumes that relationships between running time and age _randomly_ vary from runner to runner, having _different_ intercepts $\beta_{0j}$ but a shared age coefficient $\beta_1$.
 
@@ -234,6 +233,8 @@ $$\begin{equation}
 \beta_{0j} | \beta_0, \sigma_0 \stackrel{ind}{\sim} N(\beta_0, \sigma_0^2)
 \end{equation}$$
 
+##
+
 This layer of the hierarchical model which depends upon two new parameters:
 
 - $\beta_0$ = the __global average intercept__ across all runners, i.e., the _average_ runner's baseline speed;
@@ -248,7 +249,8 @@ Regression model within runner $j$: $Y_{ij} | \beta_{0j}, \beta_1, \sigma_y  \si
 
 variability in baseline speeds BETWEEN runners: $\beta_{0j} | \beta_0, \sigma_0   \stackrel{ind}{\sim} N(\beta_0, \sigma_0^2)$
 
-. . .
+##
+
 priors on global parameters:
 
 $$\beta_{0c}   \sim N(m_0, s_0^2)  $$  
@@ -266,7 +268,6 @@ The appropriateness of the Bayesian Normal hierarchical regression model of $Y_{
 - __Structure of the data__    
     Conditioned on predictor $X_{ij}$, the outcomes $Y_{ij}$ on any one group $j$ are _independent_ of those on another group $k$, $Y_{ik}$. However, different data points _within_ the same group $j$, $Y_{ij}$ and $Y_{hj}$, are _correlated_.
     
-(Continued on the next slide)
 
 ##
 
@@ -469,6 +470,7 @@ These are labeled as follows in the `stan_glmer()` simulation results:
 Consider the __global relationship__ between running time and age for the _typical_ runner: 
 
 $$\beta_0 + \beta_1 X$$ 
+
 . . .
 
 Posterior summaries for $\beta_0$ and $\beta_1$, which are `fixed` across runners, can be shown with.
@@ -656,6 +658,7 @@ tidy_sigma
 ```
 
 . . .
+
 For a given runner $j$, we estimate that their observed running time at any age will deviate from _their_ mean regression model by roughly `r round(sig_y,2)` minutes ( $\sigma_y$ ).
 
 . . .
@@ -671,6 +674,7 @@ Comparatively then, the posterior results suggest that $\sigma_y < \sigma_0$ -- 
 Recall:
 
 $$\text{Var}(Y_{ij}) = \sigma_0^2 + \sigma_y^2  .$$
+
 ##
 
 
@@ -765,6 +769,10 @@ N\left(
 \right)
 \end{equation}$$
 
+(continued on the next slide)
+
+##
+
 where $(\beta_0, \beta_1)$ is the joint mean and $\Sigma$ is the 2x2 __covariance matrix__ which encodes the variability and correlation amongst $\beta_{0j}$ and $\beta_{1j}$:
 
 $$\begin{equation}
@@ -775,7 +783,6 @@ $$\begin{equation}
 \end{equation}$$
 
 ##
-
 
 On the next slide, plot (a) illustrates the scenario in which there's a strong _negative_ correlation between $\beta_{0j}$ and $\beta_{1j}$ -- models that start out lower (with small $\beta_{0j}$) tend to increase at a more rapid rate (with higher $\beta_{1j}$).
 In plot (c) there's a strong _positive_ correlation between $\beta_{0j}$ and $\beta_{1j}$ -- models that start out higher (with larger $\beta_{0j}$) also tend to increase at a more rapid rate (with higher $\beta_{1j}$).
@@ -894,6 +901,8 @@ The `stan_glmer()` function allows users to define this prior through a __decomp
 
 Very generally speaking, this model _decomposes_ our prior model for the covariance matrix into prior information about three separate pieces:
 
+##
+
 1. the correlation between the group-specific intercepts and slopes, $\rho$;
 2. the combined degree to which the intercepts and slopes vary by group, $\sigma_0^2 + \sigma_1^2$; 
 3. the relative proportion of this variability between groups that's due to differing intercepts vs differing slopes,    
@@ -960,11 +969,7 @@ gridExtra::grid.arrange(g1,g2,g3,ncol=3)
 ##
 
 
-In general, $\pi_0$ and $\pi_1$ always sum to 1, and thus have a push-and-pull relationship.
-
-. . .
-
-For example, when $\pi_0 \approx 1$ and $\pi_1 \approx 0$, the variability in intercepts ( $\sigma_0^2$ ) is large in comparison to the variability in slopes ( $\sigma_1^2$ ).
+In general, $\pi_0$ and $\pi_1$ always sum to 1, and thus have a push-and-pull relationship.For example, when $\pi_0 \approx 1$ and $\pi_1 \approx 0$, the variability in intercepts ( $\sigma_0^2$ ) is large in comparison to the variability in slopes ( $\sigma_1^2$ ).
 
 . . .
 
@@ -985,9 +990,9 @@ In our analysis, we'll utilize the weakly informative default setting for the hi
 
 This makes the following prior assumptions regarding the three pieces above:
 
-1. the correlation $\rho$ is equally likely to be anywhere between -1 and 1;
-2. we have weakly informative prior information about the total degree to which the intercepts and slopes vary by runner; and
-3. the relative proportion of the variability between runners that's due to differing intercepts is equally likely to be anywhere between 0 and 1, i.e., we're not at all sure if there's more, less, or the same level of variability in the baseline speeds from runner to runner, $\beta_{0j}$, than in the rate at which their speeds change over time, $\beta_{1j}$.
+1.the correlation $\rho$ is equally likely to be anywhere between -1 and 1;
+2.we have weakly informative prior information about the total degree to which the intercepts and slopes vary by runner; and
+3.the relative proportion of the variability between runners that's due to differing intercepts is equally likely to be anywhere between 0 and 1, 
 
 
 
@@ -1063,20 +1068,15 @@ runner_chains_2 <- running_model_2 %>%
 ```
 
 ##
-
-
-Obtaining the MCMC chains for the runner-specific intercepts and slopes gets quite technical.
-Here are some important details to pick up on:
-
-- `spread_draws()` uses `b[term, runner]` to grab the chains for all runner-specific parameters. As usual now, these chains correspond to $b_{0j}$ and $b_{1j}$, the _differences_ between the runner-specific vs global intercepts and age coefficients.
+`spread_draws()` uses `b[term, runner]` to grab the chains for all runner-specific parameters. As usual now, these chains correspond to $b_{0j}$ and $b_{1j}$, the _differences_ between the runner-specific vs global intercepts and age coefficients.
 
 . . .
 
-- `pivot_wider()` creates separate columns for each of the $b_{0j}$ and $b_{1j}$ chains and names these `b_(Intercept)` and `b_age`.
+`pivot_wider()` creates separate columns for each of the $b_{0j}$ and $b_{1j}$ chains and names these `b_(Intercept)` and `b_age`.
 
 . . .
 
-- `mutate()` obtains the runner-specific intercepts $\beta_{0j} = \beta_0 + b_{0j}$, named `runner_intercept`, by summing the global `(Intercept)` and runner-specific adjustments `b_(Intercept)`. The runner-specific $\beta_{1j}$ coefficients, `runner_age`, are created similarly.
+`mutate()` obtains the runner-specific intercepts $\beta_{0j} = \beta_0 + b_{0j}$, named `runner_intercept`, by summing the global `(Intercept)` and runner-specific adjustments `b_(Intercept)`. The runner-specific $\beta_{1j}$ coefficients, `runner_age`, are created similarly.
 
 ##
 
@@ -1170,15 +1170,15 @@ tidy(running_model_2, effects = "ran_pars")
 
 Consider some highlights of this output:
 
-- The standard deviation $\sigma_1$ in the age coefficients $\beta_{1j}$ is likely around `r round(sum_var[2,3],3)` minutes per year. On the scale of a 10-mile race, this indicates very little variability between the runners when it comes to the rate at which running times change with age.
+The standard deviation $\sigma_1$ in the age coefficients $\beta_{1j}$ is likely around `r round(sum_var[2,3],3)` minutes per year. On the scale of a 10-mile race, this indicates very little variability between the runners when it comes to the rate at which running times change with age.
 
 . . .
 
-- Per the output for $\sigma_y$, an individual runner's net times tend to deviate from their own mean model by roughly `r round(sum_var[4,3],2)` minutes.
+Per the output for $\sigma_y$, an individual runner's net times tend to deviate from their own mean model by roughly `r round(sum_var[4,3],2)` minutes.
 
 . . .
 
-- There's a weak negative correlation of roughly `r round(sum_var[3,3],4)` between the runner-specific $\beta_{0j}$ and $\beta_{1j}$ parameters. Thus, it seems that, _ever so slightly_, runners that start off faster tend to slow down at a faster rate.
+There's a weak negative correlation of roughly `r round(sum_var[3,3],4)` between the runner-specific $\beta_{0j}$ and $\beta_{1j}$ parameters. Thus, it seems that, _ever so slightly_, runners that start off faster tend to slow down at a faster rate.
 
 
 
@@ -1366,6 +1366,7 @@ In general, let $Y_{new,j}$ denote a _new_ observation on an _observed_ runner $
 . . .
 
 $$Y_{\text{new},j}^{(i)} | \beta_{0j}, \beta_1, \sigma_y  \; \sim \; N\left(\mu_{ij}^{(i)}, \left(\sigma_y^{(i)}\right)^2\right) \;\; \text{ where } \; \mu_{ij}^{(i)} = \beta_{0j}^{(i)} + \beta_1^{(i)} \cdot 61$$
+
 . . .
 
 The resulting posterior predictive model will reflect two sources of uncertainty in runner $j$'s race time: the __within-group sampling variability__ $\sigma_y$ (we can't perfectly predict runner $j$'s time from their mean model); and __posterior variability__ in $\beta_{0j}$, $\beta_1$, and $\sigma_y$ (the parameters defining runner $j$'s relationship between running time and age are unknown and random).
