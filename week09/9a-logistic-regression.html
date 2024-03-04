@@ -502,6 +502,9 @@ $ raintoday    &lt;fct&gt; No, No, No, No, No, Yes, No, No, Yes, Yes, No, No, Ye
 <p>When controlling for the other predictors <span class="math inline">\((X_2,\ldots,X_p)\)</span>, let <span class="math inline">\(\text{odds}_x\)</span> represent the typical odds of the event of interest when <span class="math inline">\(X_1 = x\)</span> and <span class="math inline">\(\text{odds}_{x+1}\)</span> the typical odds when <span class="math inline">\(X_1 = x + 1\)</span>. Then when <span class="math inline">\(X_1\)</span> increases by 1, from <span class="math inline">\(x\)</span> to <span class="math inline">\(x + 1\)</span>, <span class="math inline">\(\beta_1\)</span> is the typical <strong>change in log odds</strong> and <span class="math inline">\(e^{\beta_1}\)</span> is the typical <strong>multiplicative change in odds</strong>:</p>
 <p><span class="math display">\[\beta_1 = \log(\text{odds}_{x+1}) - \log(\text{odds}_x)
 \;\;\; \text{ and } \;\;\; e^{\beta_1} = \frac{\text{odds}_{x+1}}{\text{odds}_x}\]</span></p>
+</section>
+<section id="section-8" class="slide level2">
+<h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Convert raintomorrow to 1s and 0s</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a>weather <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span> </span>
@@ -516,7 +519,7 @@ $ raintoday    &lt;fct&gt; No, No, No, No, No, Yes, No, No, Yes, Yes, No, No, Ye
 <span id="cb4-11"><a href="#cb4-11"></a>                         <span class="at">seed =</span> <span class="dv">84735</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="section-8" class="slide level2">
+<section id="section-9" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">prior_summary</span>(rain_model_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -536,14 +539,14 @@ See help('prior_summary.stanreg') for more details</code></pre>
 </div>
 </div>
 </section>
-<section id="section-9" class="slide level2">
+<section id="section-10" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">mcmc_dens_overlay</span>(rain_model_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="9a-logistic-regression_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"></section>
-<section id="section-10" class="slide level2">
+<section id="section-11" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>rain_model_1_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(rain_model_1)</span>
@@ -556,11 +559,11 @@ See help('prior_summary.stanreg') for more details</code></pre>
 </div>
 </div>
 </section>
-<section id="section-11" class="slide level2">
+<section id="section-12" class="slide level2">
 <h2></h2>
 <p><span class="math display">\[\pi = \frac{e^{\beta_0 + \beta_1 X_1}}{1 + e^{\beta_0 + \beta_1 X_1}}\]</span></p>
 </section>
-<section id="section-12" class="slide level2">
+<section id="section-13" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># The first 50 posterior parameter sets</span></span>
@@ -581,7 +584,7 @@ See help('prior_summary.stanreg') for more details</code></pre>
 <span id="cb10-16"><a href="#cb10-16"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"probability of rain"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="section-13" class="slide level2">
+<section id="section-14" class="slide level2">
 <h2></h2>
 
 <img data-src="9a-logistic-regression_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
@@ -593,7 +596,7 @@ See help('prior_summary.stanreg') for more details</code></pre>
 \pi = \frac{e^{\beta_0 + \beta_1 * 99}}{1 + e^{\beta_0 + \beta_1 * 99}} \; .
 \end{equation}\]</span></p>
 </section>
-<section id="section-14" class="slide level2">
+<section id="section-15" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Posterior predictions on log(odds) scale</span></span>
@@ -610,7 +613,7 @@ iterations          1
 </div>
 </div>
 </section>
-<section id="section-15" class="slide level2">
+<section id="section-16" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># Posterior predictions on probability scale</span></span>
@@ -627,7 +630,7 @@ iterations         1
 </div>
 </div>
 </section>
-<section id="section-16" class="slide level2">
+<section id="section-17" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Posterior predictions of binary outcome</span></span>
@@ -644,7 +647,7 @@ iterations         1
 </div>
 </div>
 </section>
-<section id="section-17" class="slide level2">
+<section id="section-18" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>rain_model_1_df <span class="sc">%&gt;%</span> </span>
@@ -664,7 +667,7 @@ iterations         1
 <p><span class="math inline">\(\pi = \frac{e^{-4.261 + 0.044 * 99}}{1 + e^{-4.261 + 0.044 * 99}} = 0.52\)</span> and <span class="math inline">\(Y\)</span> is a random draw from Bern(0.52)</p>
 </div>
 </section>
-<section id="section-18" class="slide level2">
+<section id="section-19" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">mcmc_dens</span>(logodds_prediction) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"log(odds)"</span>)</span>
@@ -673,7 +676,7 @@ iterations         1
 </div>
 
 <img data-src="9a-logistic-regression_files/figure-revealjs/unnamed-chunk-18-1.png" width="960" class="r-stretch"></section>
-<section id="section-19" class="slide level2">
+<section id="section-20" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">table</span>(binary_prediction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -696,7 +699,7 @@ iterations         1
 <li class="fragment">If <span class="math inline">\(p &lt; c\)</span>, then classify <span class="math inline">\(Y\)</span> as 0.</li>
 </ul>
 </section>
-<section id="section-20" class="slide level2">
+<section id="section-21" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">set.seed</span>(<span class="dv">84735</span>)</span>
@@ -923,7 +926,7 @@ iterations         1
 </div>
 </div>
 </section>
-<section id="section-21" class="slide level2">
+<section id="section-22" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>weather_classifications <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span></span>
@@ -932,7 +935,7 @@ iterations         1
 <span id="cb26-4"><a href="#cb26-4"></a>  <span class="fu">select</span>(humidity9am, rain_prop, rain_class_1, raintomorrow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="section-22" class="slide level2">
+<section id="section-23" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">head</span>(weather_classifications,<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -958,7 +961,7 @@ iterations         1
 </div>
 </div>
 </section>
-<section id="section-23" class="slide level2">
+<section id="section-24" class="slide level2">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">set.seed</span>(<span class="dv">84735</span>)</span>
@@ -979,7 +982,7 @@ overall_accuracy 0.81700000</code></pre>
 </div>
 </div>
 </section>
-<section id="section-24" class="slide level2">
+<section id="section-25" class="slide level2">
 <h2></h2>
 <p><strong>Sensitivity, specificity, and overall accuracy</strong></p>
 <p>A confusion matrix summarizes the results of these classifications relative to the actual observations where <span class="math inline">\(a + b + c + d = n\)</span>:</p>

@@ -154,7 +154,7 @@ $$\beta_1 = \log(\text{odds}_{x+1}) - \log(\text{odds}_x)
 \;\;\; \text{ and } \;\;\; e^{\beta_1} = \frac{\text{odds}_{x+1}}{\text{odds}_x}$$
 
 
-
+##
 
 ```{r eval = FALSE}
 # Convert raintomorrow to 1s and 0s
